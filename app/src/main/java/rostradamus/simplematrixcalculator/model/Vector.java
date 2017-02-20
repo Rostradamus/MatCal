@@ -43,7 +43,7 @@ public class Vector implements Iterable<Double>{
 
 
     public Vector unitVector() throws UnavailableVectorException {
-        double length = length();
+        double length = norm();
         Vector retVector = new Vector();
 
         for (Double component : components) {
@@ -52,7 +52,7 @@ public class Vector implements Iterable<Double>{
         return retVector;
     }
 
-    public double length() throws UnavailableVectorException {
+    public double norm() throws UnavailableVectorException {
         double result = dotProduct(this);
 
         return Math.sqrt(result);
