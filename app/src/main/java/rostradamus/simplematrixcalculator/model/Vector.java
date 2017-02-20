@@ -29,8 +29,12 @@ public class Vector implements Iterable<Double>{
         return components;
     }
 
-    public void setComponent(double component, int pos) {
-        this.components.set(pos, component);
+    public void setComponent( int pos, double component) throws UnavailableVectorException{
+        try {
+            this.components.set(pos, component);
+        } catch (Exception e) {
+            throw new UnavailableVectorException(e.getMessage());
+        }
     }
 
     public int getNumComponents() {
