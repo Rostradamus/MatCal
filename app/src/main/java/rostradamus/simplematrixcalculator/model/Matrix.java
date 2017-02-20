@@ -8,6 +8,7 @@ import rostradamus.simplematrixcalculator.exception.UnavailableMatrixException;
  * Created by rolee on 2016-12-28.
  */
 
+
 public class Matrix implements Iterable<Vector> {
 
     private List<Vector> vectors;
@@ -61,6 +62,8 @@ public class Matrix implements Iterable<Vector> {
     // EFFECT: return true if the matrix is valid
     //                        matrix has vectors with same number of components
     static public boolean isVaildMatrix(List<Vector> vectors) {
+        if (vectors.size() == 0)
+            return false;
         for (int i = 0; i < (vectors.size() - 1); i++) {
             if (vectors.get(i).getNumComponents() != vectors.get(i+1).getNumComponents())
                 return false;
