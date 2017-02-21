@@ -46,6 +46,8 @@ public class VectorTest {
         fail();
     }
 
+    
+
 
     private void setUp() {
         testVector1 = new Vector(3.0, 1.5, 4.3);
