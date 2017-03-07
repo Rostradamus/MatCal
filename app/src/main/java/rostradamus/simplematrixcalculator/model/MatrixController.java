@@ -11,7 +11,7 @@ public class MatrixController {
     }
 
     public static MatrixController getInstance(){
-        if (MatrixController.instance == null) return new MatrixController();
-        return instance;
+        if (MatrixController.instance == null) MatrixController.instance = new MatrixController();
+        return MatrixController.instance;
     }
 }

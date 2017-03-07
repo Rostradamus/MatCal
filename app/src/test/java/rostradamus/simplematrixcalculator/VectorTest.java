@@ -41,12 +41,6 @@ public class VectorTest {
     }
 
     @Test
-    public void testFlush() {
-        VectorController.flush();
-        testVectorController.isNull(testVector1);
-    }
-
-    @Test
     public void testSetComponent() throws UnavailableVectorException{
         setUp();
         testVectorController.setComponent(testVector1, 2, 3.0);
