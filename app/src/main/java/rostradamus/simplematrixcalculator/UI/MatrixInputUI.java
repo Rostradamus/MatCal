@@ -1,12 +1,11 @@
+package rostradamus.simplematrixcalculator.UI;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import rostradamus.simplematrixcalculator.R;
-import rostradamus.simplematrixcalculator.UI.MainActivity;
-import rostradamus.simplematrixcalculator.model.MatrixController;
-import rostradamus.simplematrixcalculator.model.VectorController;
 
 public class MatrixInputUI extends AppCompatActivity {
 
