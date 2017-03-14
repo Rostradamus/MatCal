@@ -1,9 +1,8 @@
-package rostradamus.simplematrixcalculator.UI;
+package rostradamus.simplematrixcalculator.ui;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
 import rostradamus.simplematrixcalculator.R;
 import rostradamus.simplematrixcalculator.model.MatrixController;
@@ -18,12 +17,11 @@ public class MainActivity extends AppCompatActivity {
         VectorController vectorController = VectorController.getInstance();
         MatrixController matrixController = MatrixController.getInstance();
         setContentView(R.layout.activity_main);
-        final Button button = (Button) findViewById(R.id.gaussian_elimination);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                setContentView(R.layout.matrix_input_ui);
-            }
-        });
+    }
+
+    public void startVectorCalculation() {
+        Intent intent = new Intent(this, VectorCalcuatorUI.class);
+        startActivity(intent);
     }
 
 }

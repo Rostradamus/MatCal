@@ -1,5 +1,11 @@
 <resources>
 
     <string name="app_name">[#] MatCal</string>
+    <string name="vector_chooser">Vector Calculation</string>
+    <string name="matrix_chooser">Matrix Calculation</string>
+    <string name="unit_vector">Unit Vector</string>
+    <string name="norm">Norm</string>
+    <string name="dot_product">Dot Product</string>
+
 
 </resources>
