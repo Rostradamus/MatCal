@@ -6,6 +6,8 @@ import org.junit.*;
 import java.util.ArrayList;
 
 import rostradamus.simplematrixcalculator.exception.UnavailableVectorException;
+import rostradamus.simplematrixcalculator.model.CalculationController;
+import rostradamus.simplematrixcalculator.model.ICalculationController;
 import rostradamus.simplematrixcalculator.model.Vector;
 import rostradamus.simplematrixcalculator.model.VectorController;
 
@@ -24,7 +26,7 @@ public class VectorTest {
 
     @Before
     public void runBefore() throws Exception {
-        testVectorController = VectorController.getInstance();
+        testVectorController = CalculationController.getInstance().getVectorController();
         testVector1 = testVectorController.createVector();
         testVector2 = testVectorController.createVector();
         testVector3 = testVectorController.createVector();

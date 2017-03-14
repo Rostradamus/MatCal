@@ -5,13 +5,7 @@ package rostradamus.simplematrixcalculator.model;
  */
 
 public class MatrixController {
-    private static MatrixController instance;
-    private MatrixController() {
+    MatrixController() {
         System.out.println("Matrix Controller Created...");
-    }
-
-    public static MatrixController getInstance(){
-        if (MatrixController.instance == null) MatrixController.instance = new MatrixController();
-        return MatrixController.instance;
     }
 }

@@ -9,19 +9,9 @@ import rostradamus.simplematrixcalculator.exception.UnavailableVectorException;
  */
 
 public class VectorController {
-    private static VectorController instance;
 
-    private VectorController() {
+    VectorController() {
         System.out.println("Vector Controller Created...");
-    }
-
-    public static VectorController getInstance() {
-        if (VectorController.instance == null) VectorController.instance = new VectorController();
-        return VectorController.instance;
-    }
-
-    public static void flush() {
-        if (VectorController.instance != null) VectorController.instance = null;
     }
 
     public Vector createVector(double... components) {
