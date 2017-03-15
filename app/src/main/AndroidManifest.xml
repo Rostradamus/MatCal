@@ -24,8 +24,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.MainActivity" />
         </activity>
-        <activity
-            android:name=".ui.MatrixCalculationUI">
+        <activity android:name=".ui.MatrixCalculationUI">
             android:parentActivityName=".ui.MainActivity>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

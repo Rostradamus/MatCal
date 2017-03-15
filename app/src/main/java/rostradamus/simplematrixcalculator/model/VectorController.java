@@ -1,5 +1,7 @@
 package rostradamus.simplematrixcalculator.model;
 
+import android.util.Log;
+
 import java.util.*;
 
 import rostradamus.simplematrixcalculator.exception.UnavailableVectorException;

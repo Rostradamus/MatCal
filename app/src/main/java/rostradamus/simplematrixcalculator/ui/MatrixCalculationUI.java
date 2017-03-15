@@ -14,6 +14,6 @@ public class MatrixCalculationUI extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         calculationController = CalculationController.getInstance();
-        setContentView(R.layout.activity_matrix_calculation_ui);
+        setContentView(R.layout.matrix_calculation_layout);
     }
 }
