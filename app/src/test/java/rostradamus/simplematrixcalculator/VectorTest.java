@@ -4,6 +4,8 @@ package rostradamus.simplematrixcalculator;
 import org.junit.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import rostradamus.simplematrixcalculator.exception.UnavailableVectorException;
 import rostradamus.simplematrixcalculator.model.CalculationController;
@@ -90,9 +92,12 @@ public class VectorTest {
 
     @Test
     public void testDotProduct() throws UnavailableVectorException {
-        testVector1 = testVectorController.createVector(3.0, 1.5, 4.3);
-        testVector2 = testVectorController.createVector(5.4, 1.0, 2.7);
-        testVector3 = testVectorController.createVector(1.0, 2.0, 3.0, 4.0);
+        List<Double> l1 = Arrays.asList(3.0, 1.5, 4.3);
+        List<Double> l2 = Arrays.asList(5.4, 1.0, 2.7);
+        List<Double> l3 = Arrays.asList(1.0, 2.0, 3.0, 4.0);
+        testVector1 = testVectorController.createVector(l1);
+        testVector2 = testVectorController.createVector(l2);
+        testVector3 = testVectorController.createVector(l3);
         setUp();
         double expected = (3.0 * 5.4) + (1.5 * 1.0) + (4.3 * 2.7);
         assertEquals(testVectorController.dotProduct(testVector1,testVector2), expected, doublePrecision);
@@ -101,8 +106,10 @@ public class VectorTest {
     @Test
     public void testDotProductWithDifferentVectorComponents() throws UnavailableVectorException {
         try {
-            testVector1 = testVectorController.createVector(1.0, 2.0);
-            testVector2 = testVectorController.createVector(3.0);
+            List<Double> l1 = Arrays.asList(1.0, 2.0);
+            List<Double> l2 = Arrays.asList(3.0);
+            testVector1 = testVectorController.createVector(l1);
+            testVector2 = testVectorController.createVector(l2);
             testVectorController.dotProduct(testVector1, testVector2);
         } catch (UnavailableVectorException e) {
             System.out.println("Expected Error caught. " + e.getMessage());
@@ -124,7 +131,8 @@ public class VectorTest {
 
     @Test
     public void testDotProductWithLeftNullVector() throws UnavailableVectorException {
-        testVector1 = testVectorController.createVector(1.0);
+
+        testVector1 = testVectorController.createVector(Arrays.asList(1.0));
         try {
             testVectorController.dotProduct(testVector1, testVector2);
         } catch (UnavailableVectorException e) {
@@ -135,7 +143,7 @@ public class VectorTest {
     }
     @Test
     public void testDotProductWithRightNullVector() throws UnavailableVectorException {
-        testVector2 = testVectorController.createVector(1.0);
+        testVector2 = testVectorController.createVector(Arrays.asList(1.0));
         try {
             testVectorController.dotProduct(testVector1, testVector2);
         } catch (UnavailableVectorException e) {
@@ -150,7 +158,8 @@ public class VectorTest {
         setUp();
         Vector actual = testVectorController.unitVector(testVector1);
         double norm = testVectorController.norm(testVector1);
-        Vector expected = testVectorController.createVector((3.0 / norm), (1.5 / norm), (4.3 / norm));
+        List<Double> l1 = Arrays.asList((3.0 / norm), (1.5 / norm), (4.3 / norm));
+        Vector expected = testVectorController.createVector(l1);
         assertEquals(expected, actual);
 
         try {
@@ -164,8 +173,11 @@ public class VectorTest {
 
 
     private void setUp() {
-        testVector1 = testVectorController.createVector(3.0, 1.5, 4.3);
-        testVector2 = testVectorController.createVector(5.4, 1.0, 2.7);
-        testVector3 = testVectorController.createVector(1.0, 2.0, 3.0, 4.0);
+        List<Double> l1 = Arrays.asList(3.0, 1.5, 4.3);
+        List<Double> l2 = Arrays.asList(5.4, 1.0, 2.7);
+        List<Double> l3 = Arrays.asList(1.0, 2.0, 3.0, 4.0);
+        testVector1 = testVectorController.createVector(l1);
+        testVector2 = testVectorController.createVector(l2);
+        testVector3 = testVectorController.createVector(l3);
     }
 }

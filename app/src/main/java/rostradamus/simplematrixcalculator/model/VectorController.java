@@ -16,7 +16,11 @@ public class VectorController {
         System.out.println("Vector Controller Created...");
     }
 
-    public Vector createVector(double... components) {
+    public Vector createVector() {
+        return new Vector();
+    }
+
+    public Vector createVector(List<Double> components) {
         return new Vector(components);
     }
 
@@ -38,8 +42,7 @@ public class VectorController {
 
     public Vector unitVector(Vector vector) throws UnavailableVectorException {
         double length = norm(vector);
-        Vector retVector = new Vector();
-
+        Vector retVector = new Vector(new ArrayList<Double>());
         for (Double component : vector.getComponents()) {
             retVector.addComponent(component/length);
         }

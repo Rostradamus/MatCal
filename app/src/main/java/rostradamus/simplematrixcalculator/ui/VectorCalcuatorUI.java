@@ -37,7 +37,6 @@ public class VectorCalcuatorUI extends AppCompatActivity {
             frameLayout.setVisibility(View.GONE);
         }
         else {
-
             openedFragment = new VectorInputFragment();
             frameLayout.setVisibility(View.VISIBLE);
             fragmentTransaction.add(R.id.input_frame_layout, openedFragment);

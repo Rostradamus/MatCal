@@ -1,5 +1,7 @@
 package rostradamus.simplematrixcalculator.model;
 
+import java.util.List;
+
 import rostradamus.simplematrixcalculator.exception.UnavailableVectorException;
 
 /**
@@ -17,6 +19,9 @@ public interface ICalculationController {
      *  Get a norm of given Vector
      *
      */
+
+    Vector createVector(List<Double> components);
+
     double norm(Vector vector) throws UnavailableVectorException;
 
     /**

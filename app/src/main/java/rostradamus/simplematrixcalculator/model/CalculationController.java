@@ -1,5 +1,7 @@
 package rostradamus.simplematrixcalculator.model;
 
+import java.util.List;
+
 import rostradamus.simplematrixcalculator.exception.UnavailableVectorException;
 
 /**
@@ -36,6 +38,10 @@ public class CalculationController implements ICalculationController {
         instance = null;
     }
 
+    @Override
+    public Vector createVector(List<Double> components) {
+        return vectorController.createVector(components);
+    }
 
     @Override
     public double norm(Vector vector) throws UnavailableVectorException{
@@ -48,7 +54,7 @@ public class CalculationController implements ICalculationController {
     }
 
     @Override
-    public double dotProduct(Vector v1, Vector v2) throws UnavailableVectorException{
+    public double dotProduct(Vector v1, Vector v2) throws UnavailableVectorException {
         return vectorController.dotProduct(v1, v2);
     }
 }
