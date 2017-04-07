@@ -15,7 +15,7 @@ import rostradamus.simplematrixcalculator.R;
 import rostradamus.simplematrixcalculator.model.CalculationController;
 import rostradamus.simplematrixcalculator.model.ICalculationController;
 
-public class VectorCalcuatorUI extends AppCompatActivity {
+public class VectorCalculationUI extends AppCompatActivity {
     private ICalculationController calculationController;
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;

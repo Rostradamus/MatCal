@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startVectorCalculation(View view) {
-        Intent intent = new Intent(this, VectorCalcuatorUI.class);
+        Intent intent = new Intent(this, VectorCalculationUI.class);
         startActivity(intent);
     }
 

@@ -16,7 +16,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.VectorCalcuatorUI"
+            android:name=".ui.VectorCalculationUI"
             android:parentActivityName=".ui.MainActivity">
 
             <!-- The meta-data tag is required if you support API level 15 and lower -->

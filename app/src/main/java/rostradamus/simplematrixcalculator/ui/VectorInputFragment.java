@@ -9,8 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.util.Log;
 import android.view.*;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.*;
 
 
 import java.util.*;
@@ -36,6 +35,8 @@ public class VectorInputFragment extends Fragment {
     private List<EditText> firstVectorArr = new ArrayList<>();
     private List<EditText> secondVectorArr = new ArrayList<>();
     private ICalculationController calculationController;
+    private TextView resultView;
+    private int layoutHeight;
 
 
 
@@ -55,6 +56,7 @@ public class VectorInputFragment extends Fragment {
         clear = (Button) v.findViewById(R.id.clearInput);
         editText = (EditText) v.findViewById(R.id.componentEditText);
         submit = (Button) v.findViewById(R.id.dotProductSubmit);
+        resultView = (TextView) v.findViewById(R.id.resultView);
 
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,10 +100,13 @@ public class VectorInputFragment extends Fragment {
                 double result = 0;
                 try {
                     result = calculationController.dotProduct(v1, v2);
+                    Log.i("Result from DotProduct", Double.toString(result));
+                    resultView = (TextView) getActivity().findViewById(R.id.resultView);
+                    resultView.setText("" + result);
+
                 } catch (UnavailableVectorException e) {
                     e.printStackTrace();
                 }
-                Log.i("Result from DotProduct", Double.toString(result));
             }
         });
         return v;
@@ -128,6 +133,13 @@ public class VectorInputFragment extends Fragment {
             firstVectorLayout.addView(makeEditText(10 + i, firstVectorArr));
             secondVectorLayout.addView(makeEditText(20 + i, secondVectorArr));
         }
+        ViewGroup.LayoutParams params = firstVectorLayout.getLayoutParams();
+        params.height = layoutHeight + 200;
+        firstVectorLayout.setLayoutParams(params);
+        params = secondVectorLayout.getLayoutParams();
+        params.height = layoutHeight + 200;
+        secondVectorLayout.setLayoutParams(params);
+
     }
     private void flushInput() {
         editText.getText().clear();
@@ -137,29 +149,27 @@ public class VectorInputFragment extends Fragment {
         }
         firstVectorArr.clear();
         secondVectorArr.clear();
-
     }
     private EditText makeEditText(int _intID, List<EditText> vectorArr) {
-        final View vectorText = getActivity().findViewById(R.id.firstVectorText);
-        final int INITIAL_POSITION = vectorText.getHeight() + (int) vectorText.getY();
+        final int INITIAL_POSITION = 10;
         final int INCREASE_RATIO_Y = 100;
-        int y = INITIAL_POSITION + INCREASE_RATIO_Y * ((_intID >= 10 && _intID < 15) ? _intID - 10 : _intID - 20);
+        layoutHeight = INITIAL_POSITION + INCREASE_RATIO_Y * ((_intID >= 10 && _intID < 15) ? _intID - 10 : _intID - 20);
 
         EditText editText = new EditText(getActivity());
         editText.setId(_intID);
         editText.setHint("My lines" + _intID);
 
-        ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+        ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         // editText.setLeft(vectorText.getLeft()); TODO
         editText.setLayoutParams(layoutParams);
 
-        editText.setY(y);
+        editText.setY(layoutHeight);
 
 
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         vectorArr.add(editText);
         if (debug) {
-            Log.i("Y-POS => " + Integer.toString(_intID), Integer.toString(y));
+            Log.i("Y-POS => " + Integer.toString(_intID), Integer.toString(layoutHeight));
             Log.i("INITIAL_POSITION", Integer.toString(INITIAL_POSITION));
             Log.i("TEXT_Y_POS => " + Integer.toString(editText.getId()), Integer.toString((int)editText.getY()));
         }
