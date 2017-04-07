@@ -89,7 +89,7 @@ public class Matrix implements Iterable<Vector> {
         return null;
     }
 
-    static public Matrix add(Matrix matrix1, Matrix matrix2) throws UnavailableMatrixException{
+    public static Matrix add(Matrix matrix1, Matrix matrix2) throws UnavailableMatrixException{
         if (matrix1.numRows != matrix2.numRows || matrix1.numColumns != matrix2.numColumns)
             throw new UnavailableMatrixException("The size of matrix is different");
         List<Vector> retVectors = new ArrayList<>();

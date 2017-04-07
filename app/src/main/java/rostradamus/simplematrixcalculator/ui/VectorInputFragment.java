@@ -37,7 +37,7 @@ public class VectorInputFragment extends Fragment {
     private ICalculationController calculationController;
     private TextView resultView;
     private int layoutHeight;
-
+    private static final int HEIGHT_MARGIN = 200;
 
 
 
@@ -86,27 +86,7 @@ public class VectorInputFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Double> l1 = new ArrayList<>();
-                List<Double> l2 = new ArrayList<>();
-
-                for (EditText et: firstVectorArr) {
-                    l1.add(Double.parseDouble(et.getText().toString()));
-                }
-                for (EditText et: secondVectorArr) {
-                    l2.add(Double.parseDouble(et.getText().toString()));
-                }
-                Vector v1 = calculationController.createVector(l1);
-                Vector v2 = calculationController.createVector(l2);
-                double result = 0;
-                try {
-                    result = calculationController.dotProduct(v1, v2);
-                    Log.i("Result from DotProduct", Double.toString(result));
-                    resultView = (TextView) getActivity().findViewById(R.id.resultView);
-                    resultView.setText("" + result);
-
-                } catch (UnavailableVectorException e) {
-                    e.printStackTrace();
-                }
+                calculateResult();
             }
         });
         return v;
@@ -134,10 +114,10 @@ public class VectorInputFragment extends Fragment {
             secondVectorLayout.addView(makeEditText(20 + i, secondVectorArr));
         }
         ViewGroup.LayoutParams params = firstVectorLayout.getLayoutParams();
-        params.height = layoutHeight + 200;
+        params.height = layoutHeight + HEIGHT_MARGIN;
         firstVectorLayout.setLayoutParams(params);
         params = secondVectorLayout.getLayoutParams();
-        params.height = layoutHeight + 200;
+        params.height = layoutHeight + HEIGHT_MARGIN;
         secondVectorLayout.setLayoutParams(params);
 
     }
@@ -166,7 +146,7 @@ public class VectorInputFragment extends Fragment {
         editText.setY(layoutHeight);
 
 
-        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        editText.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
         vectorArr.add(editText);
         if (debug) {
             Log.i("Y-POS => " + Integer.toString(_intID), Integer.toString(layoutHeight));
@@ -174,6 +154,31 @@ public class VectorInputFragment extends Fragment {
             Log.i("TEXT_Y_POS => " + Integer.toString(editText.getId()), Integer.toString((int)editText.getY()));
         }
         return editText;
+    }
+
+    private void calculateResult() {
+        List<Double> l1 = new ArrayList<>();
+        List<Double> l2 = new ArrayList<>();
+        try {
+            for (EditText et: firstVectorArr) {
+                l1.add(Double.parseDouble(et.getText().toString()));
+            }
+            for (EditText et: secondVectorArr) {
+                l2.add(Double.parseDouble(et.getText().toString()));
+            }
+            Vector v1 = calculationController.createVector(l1);
+            Vector v2 = calculationController.createVector(l2);
+
+            double result = calculationController.dotProduct(v1, v2);
+            Log.i("Result from DotProduct", Double.toString(result));
+            resultView = (TextView) getActivity().findViewById(R.id.resultView);
+            resultView.setText("" + result);
+
+        } catch (UnavailableVectorException e) {
+            alertHelper(e.getMessage());
+        } catch (NumberFormatException e) {
+            alertHelper("Input must be number");
+        }
     }
 
 
