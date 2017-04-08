@@ -11,6 +11,13 @@ import rostradamus.simplematrixcalculator.exception.UnavailableVectorException;
  */
 
 public class VectorController {
+    private static VectorController instance;
+    private static final String DEFAULT_DELTA_VALUE =  "%.7f";
+
+    public static VectorController getInstance() {
+        if (instance == null) instance = new VectorController();
+        return instance;
+    }
 
     VectorController() {
         System.out.println("Vector Controller Created...");
@@ -44,7 +51,7 @@ public class VectorController {
         double length = norm(vector);
         Vector retVector = new Vector(new ArrayList<Double>());
         for (Double component : vector.getComponents()) {
-            retVector.addComponent(component/length);
+            retVector.addComponent(cutDouble(component/length));
         }
         return retVector;
     }
@@ -70,6 +77,25 @@ public class VectorController {
         return result;
     }
 
+    public Vector addition(List<Vector> vectors) throws UnavailableVectorException {
+        Vector retVector = null;
+        int numComponents = vectors.get(0).getNumComponents();
+        for (Vector v: vectors) {
+            if (numComponents != v.getNumComponents())
+                throw new UnavailableVectorException("Error: The Number of Components are Different");
+            if (retVector == null) retVector = createVector(v.getComponents());
+            else {
+                for(int i = 0; i < retVector.getNumComponents(); i++) {
+                    retVector.setComponent(i, cutDouble(retVector.getComponents().get(i) + v.getComponents().get(i)));
+                }
+            }
+        }
+        return retVector;
+    }
+
+    private double cutDouble(double value) {
+        return Double.parseDouble(String.format(DEFAULT_DELTA_VALUE, value));
+    }
 
 }
 

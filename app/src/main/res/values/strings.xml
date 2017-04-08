@@ -14,6 +14,9 @@
     <string name="clearInput">Clear</string>
     <string name="addRow">+</string>
     <string name="removeRow">-</string>
+    <string name="length">Length</string>
+    <string name="unitVector">Unit Vector</string>
+    <string name="vectorAddition">Addition</string>
 
 
 </resources>
