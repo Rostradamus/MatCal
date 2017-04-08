@@ -1,10 +1,6 @@
 package rostradamus.simplematrixcalculator.ui;
 
 
-
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,25 +10,23 @@ import android.widget.*;
 import android.view.View;
 
 
+import java.util.*;
+
 import rostradamus.simplematrixcalculator.R;
 import rostradamus.simplematrixcalculator.model.CalculationController;
 import rostradamus.simplematrixcalculator.model.ICalculationController;
 
 public class VectorCalculationUI extends AppCompatActivity {
     private ICalculationController calculationController;
-    private FragmentManager fragmentManager;
-    private FragmentTransaction fragmentTransaction;
-    private Fragment openedFragment;
     private int numRow;
     private int numComponent;
+    private List<List<EditText>> inputs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         calculationController = CalculationController.getInstance();
         setContentView(R.layout.vector_calcuator_layout);
-        fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
         numRow = 0;
         EditText inputNumber = (EditText) findViewById(R.id.componentEditText);
         inputNumber.addTextChangedListener(new TextWatcher() {
@@ -89,18 +83,14 @@ public class VectorCalculationUI extends AppCompatActivity {
         vectorTable.removeView(tableRow);
         numRow--;
     }
-    public void openFragment(View view) {
-        FrameLayout frameLayout = (FrameLayout) findViewById(R.id.input_frame_layout);
-        if (openedFragment != null) {
-            frameLayout.setVisibility(View.GONE);
-        }
-        else {
-            openedFragment = new VectorInputFragment();
-            frameLayout.setVisibility(View.VISIBLE);
-            fragmentTransaction.add(R.id.input_frame_layout, openedFragment);
-            fragmentTransaction.commit();
+
+    public void dotProduct(View view) {
+        if (inputs.size() != 2) return;
+        for (List<EditText> ets: inputs) {
+
         }
     }
+
 
 
 }
