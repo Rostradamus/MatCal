@@ -35,7 +35,7 @@
         android:layout_marginStart="16dp"
         android:ems="10"
         android:inputType="number"
-        app:layout_constraintBaseline_toBaselineOf="@+id/confirmButton"
+        app:layout_constraintBaseline_toBaselineOf="@+id/addRow"
         app:layout_constraintLeft_toRightOf="@+id/numComponentsTextView" />
 
     <Button
@@ -52,13 +52,13 @@
         app:layout_constraintRight_toRightOf="parent" />
 
     <Button
-        android:id="@+id/confirmButton"
+        android:id="@+id/addRow"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/confirm"
+        android:text="@string/addRow"
         app:layout_constraintLeft_toRightOf="@+id/componentEditText"
         app:layout_constraintTop_toTopOf="parent" />
 

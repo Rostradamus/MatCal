@@ -52,7 +52,7 @@ public class VectorInputFragment extends Fragment {
         View v = inflater.inflate(R.layout.vector_input_fragment_layout, container, false);
         calculationController = CalculationController.getInstance();
 
-        confirm = (Button) v.findViewById(R.id.confirmButton);
+        confirm = (Button) v.findViewById(R.id.addRow);
         clear = (Button) v.findViewById(R.id.clearInput);
         editText = (EditText) v.findViewById(R.id.componentEditText);
         submit = (Button) v.findViewById(R.id.dotProductSubmit);

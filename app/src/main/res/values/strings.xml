@@ -12,6 +12,8 @@
     <string name="firstVector">Vector 1</string>
     <string name="secondVector">Vector 2</string>
     <string name="clearInput">Clear</string>
+    <string name="addRow">+</string>
+    <string name="removeRow">-</string>
 
 
 </resources>
