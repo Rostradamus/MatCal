@@ -55,16 +55,21 @@ public class Vector implements Iterable<Double>{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Vector vector = (Vector) o;
+        Vector doubles = (Vector) o;
 
-        return components.equals(vector.components);
+        if (numComponents != doubles.numComponents) return false;
+        if (isNull != doubles.isNull) return false;
+        return components.equals(doubles.components);
+
     }
 
     @Override
     public int hashCode() {
-        return components.hashCode();
+        int result = components.hashCode();
+        result = 31 * result + numComponents;
+        result = 31 * result + (isNull ? 1 : 0);
+        return result;
     }
-
 
     @Override
     public Iterator<Double> iterator() {

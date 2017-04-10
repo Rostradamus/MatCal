@@ -4,16 +4,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import rostradamus.simplematrixcalculator.R;
-import rostradamus.simplematrixcalculator.model.CalculationController;
-import rostradamus.simplematrixcalculator.model.ICalculationController;
+import rostradamus.simplematrixcalculator.model.IMatrixController;
+import rostradamus.simplematrixcalculator.model.MatrixController;
 
 public class MatrixCalculationUI extends AppCompatActivity {
-    private ICalculationController calculationController;
+    private IMatrixController matrixController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        calculationController = CalculationController.getInstance();
+        matrixController = MatrixController.getInstance();
         setContentView(R.layout.matrix_calculation_layout);
     }
 }

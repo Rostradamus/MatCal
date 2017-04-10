@@ -5,28 +5,21 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.Gravity;
+import android.text.*;
 import android.widget.*;
-import android.view.View;
-
-
-import java.util.*;
-
+import android.view.*;
 import rostradamus.simplematrixcalculator.R;
-
 import rostradamus.simplematrixcalculator.exception.UnavailableVectorException;
+import rostradamus.simplematrixcalculator.model.IVectorController;
 import rostradamus.simplematrixcalculator.model.Vector;
 import rostradamus.simplematrixcalculator.model.VectorController;
+import java.util.*;
 
 public class VectorCalculationUI extends AppCompatActivity {
-    private VectorController vectorController;
+    private IVectorController vectorController;
     private int numRow;
     private int numComponent;
     private List<List<EditText>> inputs;
-    private static final String DEFAULT_DELTA_VALUE =  "%.7f";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +105,6 @@ public class VectorCalculationUI extends AppCompatActivity {
         List<Vector> vectors = vectorConverter();
         try {
             double result = vectorController.dotProduct(vectors.get(0), vectors.get(1));
-            result = Double.parseDouble(String.format(DEFAULT_DELTA_VALUE,result));
             renderResult(result);
         } catch (UnavailableVectorException e) {
             alertHelper("Vector is NOT valid");
@@ -126,8 +118,6 @@ public class VectorCalculationUI extends AppCompatActivity {
         }
         try {
             double result = vectorController.norm(vectorConverter().get(0));
-            // This line cuts down decimal digits
-            result = Double.parseDouble(String.format(DEFAULT_DELTA_VALUE,result));
 
             renderResult(result);
         } catch (UnavailableVectorException e) {
@@ -169,7 +159,6 @@ public class VectorCalculationUI extends AppCompatActivity {
             List<Double> components = new ArrayList<>();
             for (EditText et: ets){
                 String input = et.getText().toString();
-                Log.i("input", input);
                 try {
                     components.add(Double.parseDouble(input));
                 } catch (RuntimeException e) {
@@ -242,7 +231,6 @@ public class VectorCalculationUI extends AppCompatActivity {
             }
         });
     }
-
 
 
 
