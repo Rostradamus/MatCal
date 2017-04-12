@@ -153,6 +153,20 @@ public class VectorCalculationUI extends AppCompatActivity {
         }
     }
 
+    public void crossProduct(View view) {
+        if (!(inputs.size() > 1)) {
+            alertHelper("Must be more than 1 row");
+            return;
+        }
+        List<Vector> vectors = vectorConverter();
+        try {
+            Vector result = vectorController.crossProduct(vectors);
+            renderResult(result);
+        } catch (UnavailableVectorException e) {
+            alertHelper(e.getMessage());
+        }
+    }
+
     private List<Vector> vectorConverter() {
         List<Vector> vectors = new ArrayList<>();
         for (List<EditText> ets: inputs) {

@@ -17,6 +17,7 @@
     <string name="length">Length</string>
     <string name="unitVector">Unit Vector</string>
     <string name="vectorAddition">Addition</string>
+    <string name="crossProduct">Cross Product</string>
 
 
 </resources>

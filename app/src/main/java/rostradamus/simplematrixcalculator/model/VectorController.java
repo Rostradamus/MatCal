@@ -93,13 +93,17 @@ public class VectorController implements IVectorController {
     // TODO
     @Override
     public Vector crossProduct(List<Vector> vectors) throws UnavailableVectorException {
-
-        int size = vectors.get(0).getNumComponents();
         Vector retVector = null;
+        int size;
+        try {
+            size = vectors.get(0).getNumComponents();
+        } catch (NullPointerException e) {
+            throw new UnavailableVectorException("Error: One of the Vectors is null");
+        }
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < vectors.size(); i++) {
             if (retVector == null)
-                retVector = crossProduct(vectors.get(i), vectors.get(++i));
+                retVector = vectors.get(i);
             else
                 retVector = crossProduct(retVector, vectors.get(i));
         }
@@ -107,7 +111,10 @@ public class VectorController implements IVectorController {
         return retVector;
     }
 
-    private Vector crossProduct(Vector v1, Vector v2) throws UnavailableVectorException{
+    private Vector crossProduct(Vector v1, Vector v2) throws UnavailableVectorException {
+
+        if (v1 == null || v2 == null)
+            throw new UnavailableVectorException("Error: One of the Vectors is null");
 
         if (v1.getNumComponents() != v2.getNumComponents())
             throw new UnavailableVectorException("Error: The Number of Components are Different");

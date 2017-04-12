@@ -159,7 +159,32 @@ public class VectorTest {
 
     }
 
-    
+    //TODO
+    @Test
+    public void testCrossProduct() throws UnavailableVectorException {
+        setUp();
+        Vector testResult = testVectorController.crossProduct(Arrays.asList(testVector1, testVector2));
+        assertEquals(Arrays.asList(-0.25, 15.12,-5.1), testVectorController.getComponents(testResult));
+
+    }
+
+    //TODO
+    @Test (expected = UnavailableVectorException.class)
+    public void testCrossProductWithDifferentSize() throws UnavailableVectorException  {
+        Vector v1 = testVectorController.createVector(Arrays.asList(4.0, 5.0));
+        Vector v2 = testVectorController.createVector(Arrays.asList(5.0, 6.0, 7.0));
+
+        testVectorController.crossProduct(Arrays.asList(v1, v2));
+
+    }
+
+    @Test (expected = UnavailableVectorException.class)
+    public void testCrossProductWithNullVector() throws UnavailableVectorException {
+        Vector v1 = null;
+        Vector v2 = testVectorController.createVector(Arrays.asList(5.0, 6.0, 7.0));
+
+        testVectorController.crossProduct(Arrays.asList(v1, v2));
+    }
 
     @Test
     public void testUnitVector() throws UnavailableVectorException {
