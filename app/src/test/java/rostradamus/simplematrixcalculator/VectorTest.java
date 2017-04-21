@@ -5,7 +5,6 @@ import org.junit.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,7 +23,8 @@ public class VectorTest {
     private Vector testVector1;
     private Vector testVector2;
     private Vector testVector3;
-    private double doublePrecision = 10e-19;
+    private static final double DEFAULT_DELTA = 10e-7;
+    private static final String DEFAULT_DELTA_VALUE = "%.7f";
 
     @Before
     public void runBefore() throws Exception {
@@ -41,44 +41,30 @@ public class VectorTest {
         setUp();
         assertFalse(testVectorController.isNull(testVector1));
         assertEquals(testVectorController.getNumComponents(testVector1), 3);
-        assertEquals(testVectorController.getComponents(testVector1).get(0), Double.valueOf(3.0));
+        assertEquals(testVectorController.getComponentAt(testVector1, 0), 3.0, DEFAULT_DELTA);
     }
 
-    @Test
-    public void testSetComponent() throws UnavailableVectorException{
-        setUp();
-        testVectorController.setComponent(testVector1, 2, 3.0);
-        assertEquals(testVectorController.getComponents(testVector1).get(2), Double.valueOf(3.0));
-        assertEquals(testVectorController.getNumComponents(testVector1), 3);
-        // setComponent here is expected to fail (Out of Bound)
-        try {
-            testVectorController.setComponent(testVector1, 5, 1);
-        } catch (UnavailableVectorException e) {
-            System.out.println("Expected Error caught. " + e.getMessage());
-            return;
-        }
-        fail();
-    }
+
 
     @Test
     public void testAddComponent() {
         testVectorController.addComponent(testVector1, 1.0);
-        assertEquals(testVectorController.getComponents(testVector1).get(0), Double.valueOf(1.0));
+        assertEquals(testVectorController.getComponentAt(testVector1, 0), 1.0, DEFAULT_DELTA);
         assertFalse(testVectorController.isNull(testVector1));
         testVectorController.addComponent(testVector1, 2.0);
         assertEquals(testVectorController.getNumComponents(testVector1), 2);
-        assertEquals(testVectorController.getComponents(testVector1).get(1), Double.valueOf(2.0));
+        assertEquals(testVectorController.getComponentAt(testVector1, 1), 2.0, DEFAULT_DELTA);
     }
 
     @Test
     public void testNorm() throws UnavailableVectorException {
         setUp();
-        double expected = testVectorController.cutDouble(Math.sqrt(Math.pow(3.0, 2) + Math.pow(1.5, 2) + Math.pow(4.3, 2)));
-        assertEquals(testVectorController.norm(testVector1), expected, doublePrecision);
-        expected = testVectorController.cutDouble(Math.sqrt(Math.pow(5.4, 2) + Math.pow(1.0, 2) + Math.pow(2.7, 2)));
-        assertEquals(testVectorController.norm(testVector2), expected, doublePrecision);
-        expected = testVectorController.cutDouble(Math.sqrt(Math.pow(1.0, 2) + Math.pow(2.0, 2) + Math.pow(3.0, 2) + Math.pow(4.0, 2)));
-        assertEquals(testVectorController.norm(testVector3), expected, doublePrecision);
+        double expected = Math.sqrt(Math.pow(3.0, 2) + Math.pow(1.5, 2) + Math.pow(4.3, 2));
+        assertEquals(testVectorController.norm(testVector1), expected, DEFAULT_DELTA);
+        expected = Math.sqrt(Math.pow(5.4, 2) + Math.pow(1.0, 2) + Math.pow(2.7, 2));
+        assertEquals(testVectorController.norm(testVector2), expected, DEFAULT_DELTA);
+        expected = Math.sqrt(Math.pow(1.0, 2) + Math.pow(2.0, 2) + Math.pow(3.0, 2) + Math.pow(4.0, 2));
+        assertEquals(testVectorController.norm(testVector3), expected, DEFAULT_DELTA);
 
         try {
             testVector1 = testVectorController.createVector();
@@ -95,12 +81,12 @@ public class VectorTest {
         List<Double> l1 = Arrays.asList(3.0, 1.5, 4.3);
         List<Double> l2 = Arrays.asList(5.4, 1.0, 2.7);
         List<Double> l3 = Arrays.asList(1.0, 2.0, 3.0, 4.0);
-        testVector1 = testVectorController.createVector(testVectorController.cutDouble(l1));
-        testVector2 = testVectorController.createVector(testVectorController.cutDouble(l2));
-        testVector3 = testVectorController.createVector(testVectorController.cutDouble(l3));
+        testVector1 = testVectorController.createVector(l1);
+        testVector2 = testVectorController.createVector(l2);
+        testVector3 = testVectorController.createVector(l3);
         setUp();
-        double expected = testVectorController.cutDouble((3.0 * 5.4) + (1.5 * 1.0) + (4.3 * 2.7));
-        assertEquals(testVectorController.dotProduct(testVector1,testVector2), expected, doublePrecision);
+        double expected = (3.0 * 5.4) + (1.5 * 1.0) + (4.3 * 2.7);
+        assertEquals(testVectorController.dotProduct(testVector1,testVector2), expected, DEFAULT_DELTA);
     }
 
     @Test
@@ -163,9 +149,11 @@ public class VectorTest {
     @Test
     public void testCrossProduct() throws UnavailableVectorException {
         setUp();
-        Vector testResult = testVectorController.crossProduct(Arrays.asList(testVector1, testVector2));
-        assertEquals(Arrays.asList(-0.25, 15.12,-5.1), testVectorController.getComponents(testResult));
+        Vector testResult = testVectorController.crossProduct(testVector1, testVector2);
 
+        assertEquals(-0.25, testVectorController.getComponentAt(testResult, 0), DEFAULT_DELTA);
+        assertEquals(15.12, testVectorController.getComponentAt(testResult, 1), DEFAULT_DELTA);
+        assertEquals(-5.1, testVectorController.getComponentAt(testResult, 2), DEFAULT_DELTA);
     }
 
     //TODO
@@ -174,7 +162,7 @@ public class VectorTest {
         Vector v1 = testVectorController.createVector(Arrays.asList(4.0, 5.0));
         Vector v2 = testVectorController.createVector(Arrays.asList(5.0, 6.0, 7.0));
 
-        testVectorController.crossProduct(Arrays.asList(v1, v2));
+        testVectorController.crossProduct(v1, v2);
 
     }
 
@@ -183,7 +171,7 @@ public class VectorTest {
         Vector v1 = null;
         Vector v2 = testVectorController.createVector(Arrays.asList(5.0, 6.0, 7.0));
 
-        testVectorController.crossProduct(Arrays.asList(v1, v2));
+        testVectorController.crossProduct(v1, v2);
     }
 
     @Test
@@ -192,7 +180,7 @@ public class VectorTest {
         Vector actual = testVectorController.unitVector(testVector1);
         double norm = testVectorController.norm(testVector1);
         List<Double> l1 = Arrays.asList((3.0 / norm), (1.5 / norm), (4.3 / norm));
-        Vector expected = testVectorController.createVector(testVectorController.cutDouble(l1));
+        Vector expected = testVectorController.createVector(l1);
 
         assertEquals(expected, actual);
         try {
@@ -204,7 +192,6 @@ public class VectorTest {
         fail();
     }
 
-
     private void setUp() {
         List<Double> l1 = Arrays.asList(3.0, 1.5, 4.3);
         List<Double> l2 = Arrays.asList(5.4, 1.0, 2.7);
@@ -213,5 +200,4 @@ public class VectorTest {
         testVector2 = testVectorController.createVector(l2);
         testVector3 = testVectorController.createVector(l3);
     }
-
 }

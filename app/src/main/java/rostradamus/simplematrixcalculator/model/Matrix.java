@@ -17,30 +17,20 @@ public class Matrix implements Iterable<Vector> {
     private boolean isNull;
 
 
-    // Constructor
-    // MODIFIES: this
-    // EFFECT: takes user's input to create a Matrix
-    public Matrix(Vector... vectors) throws UnavailableMatrixException {
-        this.vectors = new ArrayList<Vector>();
-        for (Vector vector : vectors)
-            this.vectors.add(vector);
-        if (!isVaildMatrix(this.vectors))
-            throw new UnavailableMatrixException("The number of rows are not valid");
-        this.numColumns = this.vectors.size();
-        this.numRows = this.vectors.get(0).getNumComponents();
-        this.isNull = false;
+    public Matrix() throws UnavailableMatrixException{
+        this(new ArrayList<Vector>());
     }
 
     // Constructor
     // MODIFIES: this
     // EFFECT: used to duplicate or create a Matrix within a method
-    private Matrix(List<Vector> vectors) throws UnavailableMatrixException {
-        if (!isVaildMatrix(vectors))
+    public Matrix(List<Vector> vectors) throws UnavailableMatrixException {
+        if (!isValidMatrix(vectors))
             throw new UnavailableMatrixException("The number of rows are not valid");
-        this.vectors = new ArrayList<>(vectors);
+        this.vectors = vectors;
         this.numColumns = this.vectors.size();
         this.numRows = this.vectors.get(0).getNumComponents();
-        this.isNull = false;
+        this.isNull = vectors.size() == 0;
     }
 
     // EFFECT: return list of vectors in the matrix
@@ -61,14 +51,18 @@ public class Matrix implements Iterable<Vector> {
     // Check if the matrix is valid or not
     // EFFECT: return true if the matrix is valid
     //                        matrix has vectors with same number of components
-    static public boolean isVaildMatrix(List<Vector> vectors) {
-        if (vectors.size() == 0)
-            return false;
-        for (int i = 0; i < (vectors.size() - 1); i++) {
-            if (vectors.get(i).getNumComponents() != vectors.get(i+1).getNumComponents())
-                return false;
+    protected boolean isValidMatrix(List<Vector> vectors) {
+        int numComponents = vectors.get(0).getNumComponents();
+        for (Vector v: vectors) {
+            if (numComponents == v.getNumComponents()) return false;
         }
         return true;
+    }
+
+
+    //TODO
+    public void addVector(Vector vector) {
+
     }
 
 

@@ -10,7 +10,6 @@ import rostradamus.simplematrixcalculator.exception.UnavailableVectorException;
 
 public class VectorController implements IVectorController {
     private static VectorController instance;
-    private static final String DEFAULT_DELTA_VALUE = "%.7f";
 
     public static VectorController getInstance() {
         if (instance == null) instance = new VectorController();
@@ -32,19 +31,12 @@ public class VectorController implements IVectorController {
     }
 
     @Override
-    public List<Double> getComponents(Vector vector) {
-        return Collections.unmodifiableList(vector.getComponents());
-    }
-
-    @Override
     public int getNumComponents(Vector vector) {
         return vector.getNumComponents();
     }
 
     @Override
-    public void setComponent(Vector vector, int pos, double component) throws UnavailableVectorException {
-        vector.setComponent(pos, component);
-    }
+    public double getComponentAt(Vector vector, int index) { return vector.getComponents().get(index); }
 
     @Override
     public boolean isNull(Vector vector) {
@@ -61,7 +53,7 @@ public class VectorController implements IVectorController {
         double length = norm(vector);
         Vector retVector = new Vector(new ArrayList<Double>());
         for (Double component : vector.getComponents()) {
-            retVector.addComponent(cutDouble(component / length));
+            retVector.addComponent(component / length);
         }
         return retVector;
     }
@@ -70,7 +62,7 @@ public class VectorController implements IVectorController {
     public double norm(Vector vector) throws UnavailableVectorException {
         double result = dotProduct(vector, vector);
 
-        return cutDouble(Math.sqrt(result));
+        return Math.sqrt(result);
     }
 
     @Override
@@ -86,38 +78,17 @@ public class VectorController implements IVectorController {
             result += v1.getComponents().get(i) * v2.getComponents().get(i);
         }
 
-        return cutDouble(result);
+        return result;
     }
 
-
-    // TODO
     @Override
-    public Vector crossProduct(List<Vector> vectors) throws UnavailableVectorException {
-        Vector retVector = null;
-        int size;
-        try {
-            size = vectors.get(0).getNumComponents();
-        } catch (NullPointerException e) {
-            throw new UnavailableVectorException("Error: One of the Vectors is null");
-        }
-
-        for (int i = 0; i < vectors.size(); i++) {
-            if (retVector == null)
-                retVector = vectors.get(i);
-            else
-                retVector = crossProduct(retVector, vectors.get(i));
-        }
-
-        return retVector;
-    }
-
-    private Vector crossProduct(Vector v1, Vector v2) throws UnavailableVectorException {
+    public Vector crossProduct(Vector v1, Vector v2) throws UnavailableVectorException {
 
         if (v1 == null || v2 == null)
             throw new UnavailableVectorException("Error: One of the Vectors is null");
 
-        if (v1.getNumComponents() != v2.getNumComponents())
-            throw new UnavailableVectorException("Error: The Number of Components are Different");
+        if (v1.getNumComponents() != 3 || v2.getNumComponents() != 3)
+            throw new UnavailableVectorException("Error: The Number of Components must be 3");
 
         Vector retVector = createVector();
         int size = v1.getNumComponents();
@@ -127,43 +98,20 @@ public class VectorController implements IVectorController {
         for (int i = 0; i < size; i++) {
             double newComp = comps1.get((i + 1) % size) * comps2.get((i + 2) % size)
                     - comps1.get((i+2) % size) * comps2.get((i + 1) % size);
-            retVector.addComponent(cutDouble(newComp));
+            retVector.addComponent(newComp);
         }
         return retVector;
     }
 
-
     @Override
-    public Vector addition(List<Vector> vectors) throws UnavailableVectorException {
-        Vector retVector = null;
-        int numComponents = vectors.get(0).getNumComponents();
-        for (Vector v : vectors) {
-            if (numComponents != v.getNumComponents())
-                throw new UnavailableVectorException("Error: The Number of Components are Different");
-            if (retVector == null) retVector = createVector(v.getComponents());
-            else {
-                for (int i = 0; i < numComponents; i++) {
-                    retVector.setComponent(i, cutDouble(retVector.getComponents().get(i) + v.getComponents().get(i)));
-                }
-            }
+    public Vector add(Vector v1, Vector v2) throws UnavailableVectorException {
+        Vector retVector = new Vector();
+        if (v1.getNumComponents() != v2.getNumComponents())
+            throw new UnavailableVectorException("Error: The Number of Components are Different");
+        for (int i = 0; i < v1.getNumComponents(); i++) {
+            retVector.addComponent(getComponentAt(v1, i) + getComponentAt(v2, i));
         }
         return retVector;
-    }
-
-    // TODO
-    @Override
-    public Vector substraction(List<Vector> vectors) throws UnavailableVectorException {
-        return null;
-    }
-
-    public double cutDouble(double value) {
-        return Double.parseDouble(String.format(DEFAULT_DELTA_VALUE, value));
-    }
-
-    public List<Double> cutDouble(List<Double> doubles) {
-        List<Double> newComps = new ArrayList<>();
-        for (Double comp: doubles) newComps.add(cutDouble(comp));
-        return newComps;
     }
 
 }

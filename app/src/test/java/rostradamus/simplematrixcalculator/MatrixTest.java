@@ -21,11 +21,6 @@ public class MatrixTest {
 
     }
 
-    @Test (expected = UnavailableMatrixException.class)
-    public void constructor() throws UnavailableMatrixException{
-        Matrix wrongMatrix = new Matrix();
-        fail();
-    }
 
 
 }

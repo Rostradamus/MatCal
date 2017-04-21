@@ -14,11 +14,10 @@ public interface IVectorController {
 
     Vector createVector(List<Double> components);
 
-    List<Double> getComponents(Vector vector);
+
+    double getComponentAt(Vector vector, int index);
 
     int getNumComponents(Vector vector);
-
-    void setComponent(Vector vector, int pos, double component) throws UnavailableVectorException;
 
     boolean isNull(Vector vector);
 
@@ -28,15 +27,10 @@ public interface IVectorController {
 
     double norm(Vector vector) throws UnavailableVectorException;
 
-    Vector addition(List<Vector> vectors) throws UnavailableVectorException;
-
-    Vector substraction(List<Vector> vectors) throws UnavailableVectorException;
+    Vector add(Vector v1, Vector v2) throws UnavailableVectorException;
 
     double dotProduct(Vector v1, Vector v2) throws UnavailableVectorException;
 
-    Vector crossProduct(List<Vector> vectors) throws UnavailableVectorException;
-
-
-
+    Vector crossProduct(Vector v1, Vector v2) throws UnavailableVectorException;
 
 }

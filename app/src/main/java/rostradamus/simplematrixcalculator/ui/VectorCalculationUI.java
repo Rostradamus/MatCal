@@ -20,6 +20,7 @@ public class VectorCalculationUI extends AppCompatActivity {
     private int numRow;
     private int numComponent;
     private List<List<EditText>> inputs;
+    private static final String DEFAULT_DELTA_VALUE = "%.7f";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,7 +147,13 @@ public class VectorCalculationUI extends AppCompatActivity {
         }
         List<Vector> vectors = vectorConverter();
         try {
-            Vector result = vectorController.addition(vectors);
+            Vector result = null;
+            for (Vector vector: vectors) {
+                if (result == null)
+                    result = vector;
+                else
+                    result = vectorController.add(result, vector);
+            }
             renderResult(result);
         } catch (UnavailableVectorException e) {
             alertHelper(e.getMessage());
@@ -160,7 +167,13 @@ public class VectorCalculationUI extends AppCompatActivity {
         }
         List<Vector> vectors = vectorConverter();
         try {
-            Vector result = vectorController.crossProduct(vectors);
+            Vector result = null;
+            for (Vector vector: vectors) {
+                if (result == null)
+                    result = vector;
+                else
+                    vectorController.crossProduct(result, vector);
+            }
             renderResult(result);
         } catch (UnavailableVectorException e) {
             alertHelper(e.getMessage());
@@ -207,7 +220,7 @@ public class VectorCalculationUI extends AppCompatActivity {
                 resultTable.removeAllViews();
                 TextView resultView = new TextView(getApplicationContext());
                 resultView.setWidth(width);
-                resultView.setText("Result = \n" + Double.toString(result));
+                resultView.setText("Result = \n" + Double.toString(cutDouble(result)));
                 resultView.setGravity(Gravity.CENTER_HORIZONTAL);
                 resultView.setTextSize(35);
                 resultTable.addView(resultView);
@@ -233,8 +246,8 @@ public class VectorCalculationUI extends AppCompatActivity {
                     TableRow tr = new TableRow(getApplicationContext());
                     tr.setLayoutParams(params);
                     TextView component = new TextView(getApplicationContext());
-                    System.out.println(vectorController.getComponents(result).get(i));
-                    component.setText(Double.toString(vectorController.getComponents(result).get(i)));
+                    System.out.println(vectorController.getComponentAt(result, i));
+                    component.setText(Double.toString(cutDouble(vectorController.getComponentAt(result, i))));
                     component.setTextSize(23);
                     component.setWidth(width);
                     component.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -244,6 +257,16 @@ public class VectorCalculationUI extends AppCompatActivity {
 
             }
         });
+    }
+
+    private List<Double> cutDouble(List<Double> doubles) {
+        List<Double> newComps = new ArrayList<>();
+        for (Double comp: doubles) newComps.add(cutDouble(comp));
+        return newComps;
+    }
+
+    private double cutDouble(double value) {
+        return Double.parseDouble(String.format(DEFAULT_DELTA_VALUE, value));
     }
 
 
