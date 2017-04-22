@@ -21,11 +21,6 @@ public class VectorController implements IVectorController {
     }
 
     @Override
-    public Vector createVector() {
-        return createVector(new ArrayList<Double>());
-    }
-
-    @Override
     public Vector createVector(List<Double> components) {
         return new Vector(components);
     }
@@ -90,7 +85,7 @@ public class VectorController implements IVectorController {
         if (v1.getNumComponents() != 3 || v2.getNumComponents() != 3)
             throw new UnavailableVectorException("Error: The Number of Components must be 3");
 
-        Vector retVector = createVector();
+        List<Double> newComponent = new ArrayList<>();
         int size = v1.getNumComponents();
         List<Double> comps1 = v1.getComponents();
         List<Double> comps2 = v2.getComponents();
@@ -98,20 +93,22 @@ public class VectorController implements IVectorController {
         for (int i = 0; i < size; i++) {
             double newComp = comps1.get((i + 1) % size) * comps2.get((i + 2) % size)
                     - comps1.get((i+2) % size) * comps2.get((i + 1) % size);
-            retVector.addComponent(newComp);
+            newComponent.add(newComp);
         }
-        return retVector;
+        return new Vector(newComponent);
     }
 
     @Override
     public Vector add(Vector v1, Vector v2) throws UnavailableVectorException {
-        Vector retVector = new Vector();
+
         if (v1.getNumComponents() != v2.getNumComponents())
             throw new UnavailableVectorException("Error: The Number of Components are Different");
+
+        List<Double> newComponent = new ArrayList<>();
         for (int i = 0; i < v1.getNumComponents(); i++) {
-            retVector.addComponent(getComponentAt(v1, i) + getComponentAt(v2, i));
+            newComponent.add(getComponentAt(v1, i) + getComponentAt(v2, i));
         }
-        return retVector;
+        return new Vector(newComponent);
     }
 
 }

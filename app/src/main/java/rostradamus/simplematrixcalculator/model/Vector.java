@@ -13,10 +13,6 @@ public class Vector implements Iterable<Double>{
     private int numComponents;
     private boolean isNull;
 
-    Vector() {
-        this(new ArrayList<Double>());
-    }
-
     Vector(List<Double> components) {
         this.components = components;
         this.numComponents = this.components.size();

@@ -10,8 +10,6 @@ import rostradamus.simplematrixcalculator.exception.UnavailableVectorException;
 
 public interface IVectorController {
 
-    Vector createVector();
-
     Vector createVector(List<Double> components);
 
 

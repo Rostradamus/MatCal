@@ -18,20 +18,20 @@ import static org.junit.Assert.*;
  * Created by rolee on 2017-02-20.
  */
 
-public class VectorTest {
+public class VectorControllerTest {
     private VectorController testVectorController;
     private Vector testVector1;
     private Vector testVector2;
     private Vector testVector3;
     private static final double DEFAULT_DELTA = 10e-7;
-    private static final String DEFAULT_DELTA_VALUE = "%.7f";
 
     @Before
     public void runBefore() throws Exception {
+
         testVectorController = VectorController.getInstance();
-        testVector1 = testVectorController.createVector();
-        testVector2 = testVectorController.createVector();
-        testVector3 = testVectorController.createVector();
+        testVector1 = testVectorController.createVector(new ArrayList<Double>());
+        testVector2 = testVectorController.createVector(new ArrayList<Double>());
+        testVector3 = testVectorController.createVector(new ArrayList<Double>());
     }
 
     @Test
@@ -43,8 +43,6 @@ public class VectorTest {
         assertEquals(testVectorController.getNumComponents(testVector1), 3);
         assertEquals(testVectorController.getComponentAt(testVector1, 0), 3.0, DEFAULT_DELTA);
     }
-
-
 
     @Test
     public void testAddComponent() {
@@ -67,7 +65,7 @@ public class VectorTest {
         assertEquals(testVectorController.norm(testVector3), expected, DEFAULT_DELTA);
 
         try {
-            testVector1 = testVectorController.createVector();
+            testVector1 = testVectorController.createVector(new ArrayList<Double>());
             testVectorController.norm(testVector1);
         } catch (UnavailableVectorException e) {
             System.out.println("Expected Error caught. " + e.getMessage());
@@ -184,7 +182,7 @@ public class VectorTest {
 
         assertEquals(expected, actual);
         try {
-            testVectorController.unitVector(testVectorController.createVector());
+            testVectorController.unitVector(testVectorController.createVector(new ArrayList<Double>()));
         } catch (UnavailableVectorException e) {
             System.out.println("Expected Error caught. " + e.getMessage());
             return;

@@ -10,9 +10,7 @@ import rostradamus.simplematrixcalculator.exception.UnavailableMatrixException;
 
 public interface IMatrixController {
 
-    Matrix createMatrix();
-
-    Matrix createMatrix(List<Vector> vectors);
+    Matrix createMatrix(List<Vector> vectors) throws UnavailableMatrixException;
 
     Matrix addition(Matrix m1, Matrix m2) throws UnavailableMatrixException;
 
