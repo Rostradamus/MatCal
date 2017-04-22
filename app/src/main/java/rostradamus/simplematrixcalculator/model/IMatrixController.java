@@ -12,7 +12,7 @@ public interface IMatrixController {
 
     Matrix createMatrix(List<Vector> vectors) throws UnavailableMatrixException;
 
-    Matrix addition(Matrix m1, Matrix m2) throws UnavailableMatrixException;
+    Matrix add(Matrix m1, Matrix m2) throws UnavailableMatrixException;
 
     Matrix transpose(Matrix matrix) throws UnavailableMatrixException;
 

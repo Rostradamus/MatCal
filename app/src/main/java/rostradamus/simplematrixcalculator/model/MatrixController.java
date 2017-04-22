@@ -12,7 +12,7 @@ import rostradamus.simplematrixcalculator.exception.UnavailableVectorException;
 
 public class MatrixController implements IMatrixController {
     private static MatrixController instance;
-    private static IVectorController vectorController;
+    private static VectorController vectorController;
     MatrixController() {
         vectorController = VectorController.getInstance();
         System.out.println("Matrix Controller Created...");
@@ -23,7 +23,7 @@ public class MatrixController implements IMatrixController {
         return instance;
     }
 
-    public IVectorController getVectorController() {
+    public VectorController getVectorController() {
         return vectorController;
     }
 
@@ -37,17 +37,13 @@ public class MatrixController implements IMatrixController {
         return matrix.getNumRows();
     }
 
-    public boolean isNull(Matrix matrix) {return matrix.isNull(); }
-
     @Override
     public Matrix createMatrix(List<Vector> vectors) throws UnavailableMatrixException {
         return new Matrix(vectors);
     }
 
     @Override
-    public Matrix addition(Matrix m1, Matrix m2) throws UnavailableMatrixException {
-        if (m1.isNull() || m2.isNull())
-            throw new UnavailableMatrixException("Error: One of the matrices is null");
+    public Matrix add(Matrix m1, Matrix m2) throws UnavailableMatrixException {
 
         if (!isSameProperty(m1, m2))
             throw new UnavailableMatrixException("Error: Matrices have different properties");
@@ -107,9 +103,6 @@ public class MatrixController implements IMatrixController {
     }
 
     private Vector getVectorAt(Matrix matrix, int index) throws UnavailableMatrixException {
-        if (matrix.isNull())
-            throw new UnavailableMatrixException("Error: Matrix is null. Can not reach the index");
-
         return matrix.getVectors().get(index);
     }
 

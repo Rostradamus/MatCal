@@ -14,7 +14,6 @@ public class Matrix implements Iterable<Vector> {
     private List<Vector> vectors;
     private int numColumns;
     private int numRows;
-    private boolean isNull;
 
 
 
@@ -26,10 +25,7 @@ public class Matrix implements Iterable<Vector> {
             throw new UnavailableMatrixException("The number of rows are not valid");
         this.vectors = vectors;
         this.numColumns = this.vectors.size();
-        this.isNull = vectors.size() == 0;
-        if (!isNull)
-            this.numRows = this.vectors.get(0).getNumComponents();
-        else this.numRows = -1;
+        this.numRows = this.vectors.get(0).getNumComponents();
 
     }
 
@@ -51,15 +47,15 @@ public class Matrix implements Iterable<Vector> {
     // Check if the matrix is valid or not
     // EFFECT: return true if the matrix is valid
     //                        matrix has vectors with same number of components
-    private boolean isValidMatrix(List<Vector> vectors) {
+    private boolean isValidMatrix(List<Vector> vectors) throws UnavailableMatrixException{
+        if (vectors.size() == 0)
+            throw new UnavailableMatrixException("Matrix with no vector is NOT valid");
         int numComponents = vectors.get(0).getNumComponents();
         for (Vector v: vectors) {
-            if (numComponents == v.getNumComponents()) return false;
+            if (numComponents != v.getNumComponents()) return false;
         }
         return true;
     }
-
-    boolean isNull() { return isNull; }
 
 
 //    public Matrix transpose() throws UnavailableMatrixException{
@@ -104,7 +100,6 @@ public class Matrix implements Iterable<Vector> {
 
         if (numColumns != vectors1.numColumns) return false;
         if (numRows != vectors1.numRows) return false;
-        if (isNull != vectors1.isNull) return false;
         return vectors.equals(vectors1.vectors);
 
     }
@@ -114,7 +109,6 @@ public class Matrix implements Iterable<Vector> {
         int result = vectors.hashCode();
         result = 31 * result + numColumns;
         result = 31 * result + numRows;
-        result = 31 * result + (isNull ? 1 : 0);
         return result;
     }
 
