@@ -12,7 +12,6 @@ public interface IVectorController {
 
     Vector createVector(List<Double> components);
 
-
     double getComponentAt(Vector vector, int index);
 
     int getNumComponents(Vector vector);

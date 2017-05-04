@@ -1,10 +1,12 @@
 package rostradamus.simplematrixcalculator.model;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
 import rostradamus.simplematrixcalculator.exception.UnavailableMatrixException;
 import rostradamus.simplematrixcalculator.exception.UnavailableVectorException;
+import rostradamus.simplematrixcalculator.Log;
 
 /**
  * Created by rolee on 2017-03-06.
@@ -15,7 +17,7 @@ public class MatrixController implements IMatrixController {
     private static VectorController vectorController;
     MatrixController() {
         vectorController = VectorController.getInstance();
-        System.out.println("Matrix Controller Created...");
+        Log.i("Matrix Controller Created...");
     }
 
     public static MatrixController getInstance() {
@@ -35,6 +37,10 @@ public class MatrixController implements IMatrixController {
     // EFFECT: return the number of rows in the matrix
     public int getNumRows(Matrix matrix) {
         return matrix.getNumRows();
+    }
+
+    public double getComponentAt(Matrix matrix, int row, int column) throws UnavailableMatrixException {
+        return getVectorAt(matrix, column).getComponents().get(row);
     }
 
     @Override

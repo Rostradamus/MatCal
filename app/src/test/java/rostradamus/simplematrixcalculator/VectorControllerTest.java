@@ -27,7 +27,6 @@ public class VectorControllerTest {
 
     @Before
     public void runBefore() throws Exception {
-
         testVectorController = VectorController.getInstance();
         testVector1 = testVectorController.createVector(new ArrayList<Double>());
         testVector2 = testVectorController.createVector(new ArrayList<Double>());
@@ -68,7 +67,7 @@ public class VectorControllerTest {
             testVector1 = testVectorController.createVector(new ArrayList<Double>());
             testVectorController.norm(testVector1);
         } catch (UnavailableVectorException e) {
-            System.out.println("Expected Error caught. " + e.getMessage());
+            Log.c(e.getMessage());
             return;
         }
         fail();
@@ -96,7 +95,7 @@ public class VectorControllerTest {
             testVector2 = testVectorController.createVector(l2);
             testVectorController.dotProduct(testVector1, testVector2);
         } catch (UnavailableVectorException e) {
-            System.out.println("Expected Error caught. " + e.getMessage());
+            Log.c(e.getMessage());
             return;
         }
         fail();
@@ -107,7 +106,7 @@ public class VectorControllerTest {
         try {
             testVectorController.dotProduct(testVector1, testVector2);
         } catch (UnavailableVectorException e) {
-            System.out.println("Expected Error caught. " + e.getMessage());
+            Log.c(e.getMessage());
             return;
         }
         fail();
@@ -120,7 +119,7 @@ public class VectorControllerTest {
         try {
             testVectorController.dotProduct(testVector1, testVector2);
         } catch (UnavailableVectorException e) {
-            System.out.println("Expected Error caught. " + e.getMessage());
+            Log.c(e.getMessage());
             return;
         }
         fail();
@@ -131,7 +130,7 @@ public class VectorControllerTest {
         try {
             testVectorController.dotProduct(testVector1, testVector2);
         } catch (UnavailableVectorException e) {
-            System.out.println("Expected Error caught. " + e.getMessage());
+            Log.c(e.getMessage());
             return;
         }
         fail();
@@ -184,7 +183,7 @@ public class VectorControllerTest {
         try {
             testVectorController.unitVector(testVectorController.createVector(new ArrayList<Double>()));
         } catch (UnavailableVectorException e) {
-            System.out.println("Expected Error caught. " + e.getMessage());
+            Log.c(e.getMessage());
             return;
         }
         fail();

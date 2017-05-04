@@ -2,6 +2,7 @@ package rostradamus.simplematrixcalculator.model;
 
 import java.util.*;
 
+import rostradamus.simplematrixcalculator.Log;
 import rostradamus.simplematrixcalculator.exception.UnavailableVectorException;
 
 /**
@@ -17,7 +18,7 @@ public class VectorController implements IVectorController {
     }
 
     VectorController() {
-        System.out.println("Vector Controller Created...");
+        Log.i("Vector Controller Created...");
     }
 
     @Override
