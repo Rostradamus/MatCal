@@ -14,33 +14,13 @@ import rostradamus.simplematrixcalculator.Log;
 
 public class MatrixController implements IMatrixController {
     private static MatrixController instance;
-    private static VectorController vectorController;
     MatrixController() {
-        vectorController = VectorController.getInstance();
         Log.i("Matrix Controller Created...");
     }
 
     public static MatrixController getInstance() {
         if (instance == null) instance = new MatrixController();
         return instance;
-    }
-
-    public VectorController getVectorController() {
-        return vectorController;
-    }
-
-    // EFFECT: return the number of columns in the matrix
-    public int getNumColumns(Matrix matrix) {
-        return matrix.getNumColumns();
-    }
-
-    // EFFECT: return the number of rows in the matrix
-    public int getNumRows(Matrix matrix) {
-        return matrix.getNumRows();
-    }
-
-    public double getComponentAt(Matrix matrix, int row, int column) throws UnavailableMatrixException {
-        return getVectorAt(matrix, column).getComponents().get(row);
     }
 
     @Override
@@ -50,6 +30,7 @@ public class MatrixController implements IMatrixController {
 
     @Override
     public Matrix add(Matrix m1, Matrix m2) throws UnavailableMatrixException {
+        IVectorController ivc = VectorController.getInstance();
 
         if (!isSameProperty(m1, m2))
             throw new UnavailableMatrixException("Error: Matrices have different properties");
@@ -58,7 +39,7 @@ public class MatrixController implements IMatrixController {
         for (int i = 0; i < m1.getNumColumns(); i++){
 
             try {
-                newVectors.add(vectorController.add(getVectorAt(m1, i), getVectorAt(m2, i)));
+                newVectors.add(ivc.add(getVectorAt(m1, i), getVectorAt(m2, i)));
             } catch (UnavailableVectorException e){
                 throw new UnavailableMatrixException(e.getMessage());
             }
@@ -70,8 +51,38 @@ public class MatrixController implements IMatrixController {
 
     @Override
     public Matrix transpose(Matrix matrix) throws UnavailableMatrixException {
-        return null;
+        List<Vector> rowVectors = new ArrayList<>();
+        int row = matrix.getNumRows();
+        for (int i = 0; i < row; i++) {
+            List<Double> compsInRow = new ArrayList<>();
+            for (Vector v: matrix) {
+                compsInRow.add(v.getComponents().get(i));
+            }
+            rowVectors.add(new Vector(compsInRow));
+        }
+
+        return new Matrix(rowVectors);
     }
+
+    //    public Matrix gaussianElimination() {
+//        return null;
+//    }
+//
+//    public static Matrix add(Matrix matrix1, Matrix matrix2) throws UnavailableMatrixException{
+//        if (matrix1.numRows != matrix2.numRows || matrix1.numColumns != matrix2.numColumns)
+//            throw new UnavailableMatrixException("The size of matrix is different");
+//        List<Vector> retVectors = new ArrayList<>();
+//
+//
+//        for (int i = 0; i < matrix1.numColumns; i++) {
+//            Vector retVector = new Vector();
+//            for (int j = 0; j < matrix1.getNumRows(); j++) {
+//
+//            }
+//        }
+//
+//        return null;
+//    }
 
     @Override
     public Matrix gaussianElimination(Matrix matrix) throws UnavailableMatrixException {
@@ -80,7 +91,9 @@ public class MatrixController implements IMatrixController {
 
     @Override
     public double determinant(Matrix matrix) throws UnavailableMatrixException {
-        return 0;
+        if (!matrix.isSquare())
+            throw new UnavailableMatrixException("Error: The Number of Rows & Columns must be the same.");
+        return determinantHelper(matrix);
     }
 
     @Override
@@ -101,6 +114,55 @@ public class MatrixController implements IMatrixController {
     @Override
     public Vector eigenvector(Matrix matrix) throws UnavailableMatrixException {
         return null;
+    }
+
+    // EFFECT: return the number of columns in the matrix
+    public int getNumColumns(Matrix matrix) {
+        return matrix.getNumColumns();
+    }
+
+    // EFFECT: return the number of rows in the matrix
+    public int getNumRows(Matrix matrix) {
+        return matrix.getNumRows();
+    }
+
+    public double getComponentAt(Matrix matrix, int row, int column) throws UnavailableMatrixException {
+        return getVectorAt(matrix, column).getComponents().get(row);
+    }
+
+    private double determinantHelper(Matrix matrix) throws UnavailableMatrixException {
+
+        double sum = 0;
+        int column = matrix.getNumColumns();
+
+        if (column == 1) {
+            return getComponentAt(matrix, 0 ,0);
+        }
+
+        if (column == 2) {
+            double first = getComponentAt(matrix, 0, 0) * getComponentAt(matrix, 1, 1);
+            double second = getComponentAt(matrix, 0, 1) * getComponentAt(matrix, 1, 0);
+            return first - second;
+        }
+        else {
+            for (int i = 0; i < column; i++) {
+                List<Vector> subVectors = new ArrayList<>();
+                for (int j = 0; j < column; j++) {
+                    if (i == j) continue;
+                    List<Double> newComps = new ArrayList<>();
+                    newComps.addAll(matrix.getVectors().get(j).getComponents());
+                    newComps.remove(0);
+                    Vector newVector = new Vector(newComps);
+                    subVectors.add(newVector);
+                }
+                Matrix subMatrix = new Matrix(subVectors);
+                if (i % 2 == 0)
+                    sum += getComponentAt(matrix, 0, i) * determinantHelper(subMatrix);
+                else
+                    sum -= getComponentAt(matrix, 0, i) * determinantHelper(subMatrix);
+            }
+            return sum;
+        }
     }
 
 

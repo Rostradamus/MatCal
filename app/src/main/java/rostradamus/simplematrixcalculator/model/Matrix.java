@@ -44,6 +44,10 @@ public class Matrix implements Iterable<Vector> {
         return numRows;
     }
 
+    boolean isSquare() {
+        return numRows == numColumns;
+    }
+
     // Check if the matrix is valid or not
     // EFFECT: return true if the matrix is valid
     //                        matrix has vectors with same number of components
@@ -56,40 +60,6 @@ public class Matrix implements Iterable<Vector> {
         }
         return true;
     }
-
-
-//    public Matrix transpose() throws UnavailableMatrixException{
-//        List<Vector> rowVectors = new ArrayList<Vector>();
-//        for (int i = 0; i < numRows; i++) {
-//            Vector rowVector = new Vector();
-//            for (Vector v: this) {
-//                rowVector.addComponent(v.getComponents().get(i));
-//            }
-//            rowVectors.add(rowVector);
-//        }
-//
-//        return new Matrix(rowVectors);
-//    }
-
-//    public Matrix gaussianElimination() {
-//        return null;
-//    }
-//
-//    public static Matrix add(Matrix matrix1, Matrix matrix2) throws UnavailableMatrixException{
-//        if (matrix1.numRows != matrix2.numRows || matrix1.numColumns != matrix2.numColumns)
-//            throw new UnavailableMatrixException("The size of matrix is different");
-//        List<Vector> retVectors = new ArrayList<>();
-//
-//
-//        for (int i = 0; i < matrix1.numColumns; i++) {
-//            Vector retVector = new Vector();
-//            for (int j = 0; j < matrix1.getNumRows(); j++) {
-//
-//            }
-//        }
-//
-//        return null;
-//    }
 
     @Override
     public boolean equals(Object o) {

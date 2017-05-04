@@ -12,8 +12,6 @@ public interface IMatrixController {
 
     Matrix createMatrix(List<Vector> vectors) throws UnavailableMatrixException;
 
-    VectorController getVectorController();
-
     Matrix add(Matrix m1, Matrix m2) throws UnavailableMatrixException;
 
     Matrix transpose(Matrix matrix) throws UnavailableMatrixException;

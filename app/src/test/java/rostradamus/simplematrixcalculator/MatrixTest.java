@@ -24,7 +24,7 @@ public class MatrixTest {
 
     @Test
     public void testConstructor() throws UnavailableMatrixException {
-        IVectorController ivc = mc.getVectorController();
+        IVectorController ivc = VectorController.getInstance();
         Vector testVector1 = ivc.createVector(Arrays.asList(1.0, 4.0, 2.5));
         Vector testVector2 = ivc.createVector(Arrays.asList(2.0, 5.0, 3.5));
         Vector testVector3 = ivc.createVector(Arrays.asList(3.0, 6.0, 4.5));
@@ -48,7 +48,7 @@ public class MatrixTest {
 
     @Test
     public void testConstructorWithDiffVectorSize() {
-        IVectorController ivc = mc.getVectorController();
+        IVectorController ivc = VectorController.getInstance();
         Vector testVector1 = ivc.createVector(Arrays.asList(3.0, 4.0));
         Vector testVector2 = ivc.createVector(Arrays.asList(1.0, 2.0, 3.5));
         try {
