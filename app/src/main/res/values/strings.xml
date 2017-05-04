@@ -6,7 +6,7 @@
     <string name="unit_vector">Unit Vector</string>
     <string name="norm">Norm</string>
     <string name="dot_product">Dot Product</string>
-    <string name="numComponents"># of Components</string>
+    <string name="numComponents">Components</string>
     <string name="confirm">Confirm</string>
     <string name="submit">Submit</string>
     <string name="firstVector">Vector 1</string>

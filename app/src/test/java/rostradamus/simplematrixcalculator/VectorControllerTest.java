@@ -23,6 +23,8 @@ public class VectorControllerTest {
     private Vector testVector1;
     private Vector testVector2;
     private Vector testVector3;
+
+    private static final String EXCEPTION_UNCAUGHT_MSG = "Expected UnavailableMatrixException but not caught";
     private static final double DEFAULT_DELTA = 10e-7;
 
     @Before
@@ -187,6 +189,53 @@ public class VectorControllerTest {
             return;
         }
         fail();
+    }
+
+    @Test
+    public void testScalarProjection() throws UnavailableVectorException {
+        testVector1 = testVectorController.createVector(Arrays.asList(1.0, 0.0, 3.0));
+        testVector2 = testVectorController.createVector(Arrays.asList(-1.0, 4.0, 2.0));
+        double expected = testVectorController.scalarProjection(testVector1, testVector2);
+        assertEquals(expected, 1.58113883008, DEFAULT_DELTA);
+    }
+
+    @Test (expected = UnavailableVectorException.class)
+    public void testScalarProjectionWithDiffSize() throws UnavailableVectorException {
+        testVector1 = testVectorController.createVector(Arrays.asList(1.0, 0.0, 3.0));
+        testVector2 = testVectorController.createVector(Arrays.asList(-1.0, 4.0));
+        double result = testVectorController.scalarProjection(testVector1, testVector2);
+        fail(EXCEPTION_UNCAUGHT_MSG);
+    }
+
+    @Test
+    public void testAngleInDegree() throws UnavailableVectorException {
+        testVector1 = testVectorController.createVector(Arrays.asList(2.0, -4.0, -1.0));
+        testVector2 = testVectorController.createVector(Arrays.asList(0.0, 5.0, 2.0));
+        double expected = testVectorController.angle(testVector1, testVector2);
+        assertEquals(expected, 153.0604473027, DEFAULT_DELTA);
+    }
+
+    @Test
+    public void testAngleInRadians() throws UnavailableVectorException {
+        testVector1 = testVectorController.createVector(Arrays.asList(2.0, -4.0, -1.0));
+        testVector2 = testVectorController.createVector(Arrays.asList(0.0, 5.0, 2.0));
+        double expected = testVectorController.angle(testVector1, testVector2, false);
+        assertEquals(expected, 2.6714087557718225, DEFAULT_DELTA);
+    }
+
+    @Test
+    public void testAngleWithSameVector() throws UnavailableVectorException {
+        testVector1 = testVectorController.createVector(Arrays.asList(2.0, -4.0, -1.0));
+        double expected = testVectorController.angle(testVector1, testVector1);
+        assertEquals(expected, 0, DEFAULT_DELTA);
+    }
+
+    @Test (expected = UnavailableVectorException.class)
+    public void testAngleWithDiffSize() throws UnavailableVectorException {
+        testVector1 = testVectorController.createVector(Arrays.asList(1.0, 2.0));
+        testVector2 = testVectorController.createVector(Arrays.asList(1.0, 2.0, 3.0));
+        double result = testVectorController.angle(testVector1, testVector2);
+        fail(EXCEPTION_UNCAUGHT_MSG);
     }
 
     private void setUp() {

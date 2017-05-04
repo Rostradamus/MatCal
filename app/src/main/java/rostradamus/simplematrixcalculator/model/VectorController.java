@@ -45,51 +45,51 @@ public class VectorController implements IVectorController {
     }
 
     @Override
-    public Vector unitVector(Vector vector) throws UnavailableVectorException {
-        double length = norm(vector);
+    public Vector unitVector(Vector u) throws UnavailableVectorException {
+        double length = norm(u);
         Vector retVector = new Vector(new ArrayList<Double>());
-        for (Double component : vector.getComponents()) {
+        for (Double component : u.getComponents()) {
             retVector.addComponent(component / length);
         }
         return retVector;
     }
 
     @Override
-    public double norm(Vector vector) throws UnavailableVectorException {
-        double result = dotProduct(vector, vector);
+    public double norm(Vector u) throws UnavailableVectorException {
+        double result = dotProduct(u, u);
 
         return Math.sqrt(result);
     }
 
     @Override
-    public double dotProduct(Vector v1, Vector v2) throws UnavailableVectorException {
-        if (v1.getNumComponents() != v2.getNumComponents())
+    public double dotProduct(Vector u, Vector v) throws UnavailableVectorException {
+        if (!isSameSize(u,v))
             throw new UnavailableVectorException("Error: The Number of Components are Different");
-        if (v1.isNull() || v2.isNull())
+        if (u.isNull() || v.isNull())
             throw new UnavailableVectorException("Error: One of the Vectors is Null");
 
         double result = 0;
 
-        for (int i = 0; i < v1.getNumComponents(); i++) {
-            result += v1.getComponents().get(i) * v2.getComponents().get(i);
+        for (int i = 0; i < u.getNumComponents(); i++) {
+            result += u.getComponents().get(i) * v.getComponents().get(i);
         }
 
         return result;
     }
 
     @Override
-    public Vector crossProduct(Vector v1, Vector v2) throws UnavailableVectorException {
+    public Vector crossProduct(Vector u, Vector v) throws UnavailableVectorException {
 
-        if (v1 == null || v2 == null)
+        if (u == null || v == null)
             throw new UnavailableVectorException("Error: One of the Vectors is null");
 
-        if (v1.getNumComponents() != 3 || v2.getNumComponents() != 3)
+        if (u.getNumComponents() != 3 || v.getNumComponents() != 3)
             throw new UnavailableVectorException("Error: The Number of Components must be 3");
 
         List<Double> newComponent = new ArrayList<>();
-        int size = v1.getNumComponents();
-        List<Double> comps1 = v1.getComponents();
-        List<Double> comps2 = v2.getComponents();
+        int size = u.getNumComponents();
+        List<Double> comps1 = u.getComponents();
+        List<Double> comps2 = v.getComponents();
 
         for (int i = 0; i < size; i++) {
             double newComp = comps1.get((i + 1) % size) * comps2.get((i + 2) % size)
@@ -100,16 +100,56 @@ public class VectorController implements IVectorController {
     }
 
     @Override
-    public Vector add(Vector v1, Vector v2) throws UnavailableVectorException {
+    public Vector add(Vector u, Vector v) throws UnavailableVectorException {
 
-        if (v1.getNumComponents() != v2.getNumComponents())
+        if (!isSameSize(u,v))
             throw new UnavailableVectorException("Error: The Number of Components are Different");
 
         List<Double> newComponent = new ArrayList<>();
-        for (int i = 0; i < v1.getNumComponents(); i++) {
-            newComponent.add(getComponentAt(v1, i) + getComponentAt(v2, i));
+        for (int i = 0; i < u.getNumComponents(); i++) {
+            newComponent.add(getComponentAt(u, i) + getComponentAt(v, i));
         }
         return new Vector(newComponent);
+    }
+
+    @Override
+    public Vector scalarMultiplication(double c, Vector u) throws UnavailableVectorException {
+        if (isNull(u))
+            throw new UnavailableVectorException("Error: The Vector is Null");
+        List<Double> newComps = new ArrayList<>();
+        for (double comp: u) {
+            newComps.add(c * comp);
+        }
+        return new Vector(newComps);
+    }
+
+    @Override
+    public double scalarProjection(Vector u, Vector v) throws UnavailableVectorException {
+        if (!isSameSize(u,v))
+            throw new UnavailableVectorException("Error: The Number of Components are Different");
+
+        return dotProduct(u,v) / norm(u);
+    }
+
+    @Override
+    public Vector projection(Vector u, Vector v) throws UnavailableVectorException {
+        return null;
+    }
+
+    @Override
+    public double angle(Vector u, Vector v) throws UnavailableVectorException {
+        return angle(u, v, true);
+    }
+
+    @Override
+    public double angle(Vector u, Vector v, boolean isDegree) throws UnavailableVectorException {
+        double result = Math.acos(scalarProjection(u,v) / norm(v));
+        if (isDegree) return Math.toDegrees(result);
+        else return result;
+    }
+
+    private boolean isSameSize(Vector u, Vector v) {
+        return u.getNumComponents() == v.getNumComponents();
     }
 
 }

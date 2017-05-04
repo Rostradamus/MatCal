@@ -20,14 +20,24 @@ public interface IVectorController {
 
     void addComponent(Vector vector, double component);
 
-    Vector unitVector(Vector vector) throws UnavailableVectorException;
+    Vector unitVector(Vector u) throws UnavailableVectorException;
 
-    double norm(Vector vector) throws UnavailableVectorException;
+    double norm(Vector u) throws UnavailableVectorException;
 
-    Vector add(Vector v1, Vector v2) throws UnavailableVectorException;
+    Vector add(Vector u, Vector v) throws UnavailableVectorException;
 
-    double dotProduct(Vector v1, Vector v2) throws UnavailableVectorException;
+    Vector scalarMultiplication(double c, Vector u) throws UnavailableVectorException;
 
-    Vector crossProduct(Vector v1, Vector v2) throws UnavailableVectorException;
+    double dotProduct(Vector u, Vector v) throws UnavailableVectorException;
+
+    Vector crossProduct(Vector u, Vector v) throws UnavailableVectorException;
+
+    double scalarProjection(Vector u, Vector v) throws UnavailableVectorException;
+
+    Vector projection(Vector u, Vector v) throws UnavailableVectorException;
+
+    double angle(Vector u, Vector v) throws UnavailableVectorException;
+
+    double angle(Vector u, Vector v, boolean isDegree) throws UnavailableVectorException;
 
 }
