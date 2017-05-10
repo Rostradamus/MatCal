@@ -76,6 +76,8 @@ public class VectorCalculationUI extends AppCompatActivity {
         });
     }
 
+
+
     private void flushInput() {
         while (inputs.size() != 0) {
             removeRow(null);
@@ -179,6 +181,10 @@ public class VectorCalculationUI extends AppCompatActivity {
         }
     }
 
+    public void angle(View view) {
+        setup(2);
+    }
+
     private List<Vector> vectorConverter() {
         List<Vector> vectors = new ArrayList<>();
         for (List<EditText> ets: inputs) {
@@ -254,6 +260,45 @@ public class VectorCalculationUI extends AppCompatActivity {
                     resultTable.addView(tr);
                 }
 
+            }
+        });
+    }
+
+    private void setup(int numRow) {
+        flushInput();
+        setRows(numRow);
+    }
+
+    private void setRows(final int number) {
+        final EditText editText = (EditText) findViewById(R.id.componentEditText);
+        if (editText.getText().toString().equals("")) {
+            alertHelper("Must enter number");
+            return;
+        }
+        final TableLayout table = (TableLayout) findViewById(R.id.vectorTable);
+        table.post(new Runnable() {
+            @Override
+            public void run() {
+                for (int j = 0; j < number; j++) {
+                    numRow++;
+                    numComponent = Integer.parseInt(editText.getText().toString());
+                    TableRow row = new TableRow(getApplicationContext());
+                    row.setId(numRow);
+                    TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+                    row.setLayoutParams(params);
+                    int width = table.getWidth() / numComponent;
+                    List<EditText> ets = new ArrayList<>();
+                    for (int i = 0; i < numComponent; i++) {
+                        EditText input = new EditText(getApplicationContext());
+                        input.setWidth(width);
+                        input.setGravity(Gravity.CENTER_HORIZONTAL);
+                        input.setId(numRow * 100 + i);
+                        row.addView(input);
+                        ets.add(input);
+                    }
+                    table.addView(row);
+                    inputs.add(ets);
+                }
             }
         });
     }

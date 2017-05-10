@@ -3,9 +3,7 @@
     <string name="app_name">[#] MatCal</string>
     <string name="vector_chooser">Vector Calculation</string>
     <string name="matrix_chooser">Matrix Calculation</string>
-    <string name="unit_vector">Unit Vector</string>
-    <string name="norm">Norm</string>
-    <string name="dot_product">Dot Product</string>
+    <string name="dot_product">u · v</string>
     <string name="numComponents">Components</string>
     <string name="confirm">Confirm</string>
     <string name="submit">Submit</string>
@@ -14,10 +12,14 @@
     <string name="clearInput">Clear</string>
     <string name="addRow">+</string>
     <string name="removeRow">-</string>
-    <string name="length">Length</string>
-    <string name="unitVector">Unit Vector</string>
-    <string name="vectorAddition">Addition</string>
-    <string name="crossProduct">Cross Product</string>
+    <string name="length">l u l</string>
+    <string name="unitVector">unit (u)</string>
+    <string name="vectorAddition">u + v</string>
+    <string name="crossProduct">u x v</string>
+    <string name="scalarMultiplication">c * u</string>
+    <string name="angle">∠(u, v)</string>
+    <string name="scalarProjection">comp (u, v)</string>
+    <string name="vectorProjection">proj (u, v)</string>
 
 
 </resources>

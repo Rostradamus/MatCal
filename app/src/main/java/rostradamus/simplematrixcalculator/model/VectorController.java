@@ -133,7 +133,11 @@ public class VectorController implements IVectorController {
 
     @Override
     public Vector projection(Vector u, Vector v) throws UnavailableVectorException {
-        return null;
+        if (!isSameSize(u,v))
+            throw new UnavailableVectorException("Error: The Number of Components are Different");
+        double scalar = scalarProjection(u,v);
+        Vector unitVector = unitVector(u);
+        return scalarMultiplication(scalar, unitVector);
     }
 
     @Override

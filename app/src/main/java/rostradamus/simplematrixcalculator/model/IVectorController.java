@@ -20,13 +20,13 @@ public interface IVectorController {
 
     void addComponent(Vector vector, double component);
 
-    Vector unitVector(Vector u) throws UnavailableVectorException;
-
     double norm(Vector u) throws UnavailableVectorException;
 
-    Vector add(Vector u, Vector v) throws UnavailableVectorException;
+    Vector unitVector(Vector u) throws UnavailableVectorException;
 
     Vector scalarMultiplication(double c, Vector u) throws UnavailableVectorException;
+
+    Vector add(Vector u, Vector v) throws UnavailableVectorException;
 
     double dotProduct(Vector u, Vector v) throws UnavailableVectorException;
 
