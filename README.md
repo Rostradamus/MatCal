@@ -1,14 +1,3 @@
-<!-- # MatCal
-
-## *Intro*
-This is a simple matrix calculator using Android Studio.
-
-- UI is still being implemented.
-- Vector calculation is mostly implemented.
-- Matrix calculation should still be implemented with tests.
-
-<p><br></p>
- -->
 
 
 <!-- Not Allowed Attribute Filtered ( se2_tbl_template="3") --><table class="__se_tbl" border="0" cellpadding="0" cellspacing="0" style="background-color: rgb(255, 255, 255); border-top: 1px solid rgb(199, 199, 199);"><tbody><tr><td width="548" style="padding: 3px 4px 2px; border-bottom: 1px solid rgb(199, 199, 199); background-color: rgb(255, 255, 255); color: rgb(102, 102, 102);"><p style="line-height: 1.5;"><span style="font-size: 36pt;"><b>&nbsp;MatCal</b></span></p></td></tr></tbody></table><p><span style="font-size: 36pt;"></span>
