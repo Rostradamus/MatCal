@@ -93,7 +93,7 @@ public class VectorController implements IVectorController {
 
         for (int i = 0; i < size; i++) {
             double newComp = comps1.get((i + 1) % size) * comps2.get((i + 2) % size)
-                    - comps1.get((i+2) % size) * comps2.get((i + 1) % size);
+                    - comps1.get((i + 2) % size) * comps2.get((i + 1) % size);
             newComponent.add(newComp);
         }
         return new Vector(newComponent);
