@@ -29,7 +29,7 @@ public class VectorCalculationUI extends AppCompatActivity {
         vectorController = VectorController.getInstance();
         setContentView(R.layout.vector_calcuator_layout);
         inputs = new ArrayList<>();
-        resulte = null;
+        result = null;
         numRow = 0;
         EditText inputNumber = (EditText) findViewById(R.id.componentEditText);
         inputNumber.addTextChangedListener(new TextWatcher() {
@@ -205,7 +205,7 @@ public class VectorCalculationUI extends AppCompatActivity {
     }
 
     public void showResult(View v) {
-        
+
     }
 
     private void alertHelper(String msg) {
