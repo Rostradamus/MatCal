@@ -24,9 +24,9 @@
 
             <TextView
                 android:id="@+id/numComponentsTextView"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="29dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
                 android:text="@string/numComponents"
                 android:textAlignment="center"
@@ -39,38 +39,15 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
                 android:layout_marginStart="16dp"
                 android:ems="10"
                 android:inputType="number"
-                app:layout_constraintBaseline_toBaselineOf="@+id/addRow"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toRightOf="@+id/numComponentsTextView"
-                app:layout_constraintRight_toLeftOf="@+id/addRow" />
-
-            <Button
-                android:id="@+id/addRow"
-                android:layout_width="0dp"
-                android:layout_height="44dp"
-                android:layout_marginTop="8dp"
-                android:onClick="addRow"
-                android:text="@string/addRow"
+                android:layout_marginRight="8dp"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintRight_toLeftOf="@+id/guideline"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/removeRow"
-                android:layout_marginRight="8dp"
-                tools:ignore="RtlHardcoded" />
-
-            <Button
-                android:id="@+id/removeRow"
-                android:layout_width="0dp"
-                android:layout_height="46dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:onClick="removeRow"
-                android:text="@string/removeRow"
-                android:textAlignment="center"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBaseline_toBaselineOf="@+id/addRow" />
+                android:layout_marginTop="16dp" />
 
             <TableLayout
                 android:id="@+id/vectorTable"
@@ -88,16 +65,29 @@
             </TableLayout>
 
             <Button
+                android:id="@+id/submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/resultButton"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vectorTable" />
+
+            <Button
                 android:id="@+id/dot_product"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="dotProduct"
                 android:text="@string/dot_product"
                 android:textAllCaps="false"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintTop_toBottomOf="@+id/unitVector"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent" />
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp" />
 
             <Button
                 android:id="@+id/norm"
@@ -160,7 +150,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintHorizontal_bias="0.503"
                 android:layout_marginTop="16dp"
-                app:layout_constraintTop_toBottomOf="@+id/vectorTable">
+                app:layout_constraintTop_toBottomOf="@+id/submit">
 
             </TableLayout>
 
@@ -189,24 +179,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/vectorProjection"
                 android:textAllCaps="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/dot_product"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintVertical_bias="0.0"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp" />
 
             <Button
                 android:id="@+id/scalar_proj"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="9dp"
+                android:layout_marginRight="8dp"
                 android:text="@string/scalarProjection"
                 android:textAllCaps="false"
                 app:layout_constraintBaseline_toBaselineOf="@+id/vector_proj"
                 app:layout_constraintRight_toLeftOf="@+id/vector_proj" />
+
+            <android.support.constraint.Guideline
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/guideline"
+                app:layout_constraintGuide_begin="201dp"
+                android:orientation="vertical" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

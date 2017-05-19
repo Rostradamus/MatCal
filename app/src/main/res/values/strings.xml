@@ -20,6 +20,7 @@
     <string name="angle">∠(u, v)</string>
     <string name="scalarProjection">comp (u, v)</string>
     <string name="vectorProjection">proj (u, v)</string>
+    <string name="resultButton">=</string>
 
 
 </resources>

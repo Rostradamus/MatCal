@@ -21,6 +21,7 @@ public class VectorCalculationUI extends AppCompatActivity {
     private int numComponent;
     private List<List<EditText>> inputs;
     private static final String DEFAULT_DELTA_VALUE = "%.7f";
+    private Vector result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class VectorCalculationUI extends AppCompatActivity {
         vectorController = VectorController.getInstance();
         setContentView(R.layout.vector_calcuator_layout);
         inputs = new ArrayList<>();
+        resulte = null;
         numRow = 0;
         EditText inputNumber = (EditText) findViewById(R.id.componentEditText);
         inputNumber.addTextChangedListener(new TextWatcher() {
@@ -78,12 +80,6 @@ public class VectorCalculationUI extends AppCompatActivity {
 
 
 
-    private void flushInput() {
-        while (inputs.size() != 0) {
-            removeRow(null);
-        }
-    }
-
     public void removeRow(View view) {
         if (numRow == 0) {
             alertHelper("No more row to remove");
@@ -100,6 +96,7 @@ public class VectorCalculationUI extends AppCompatActivity {
     }
 
     public void dotProduct(View view) {
+        setup(2);
         if (inputs.size() != 2) {
             alertHelper("Must be 2 rows for Dot Product");
             return;
@@ -114,6 +111,7 @@ public class VectorCalculationUI extends AppCompatActivity {
     }
 
     public void norm (View view) {
+        setup(1);
         if (inputs.size() != 1) {
             alertHelper("Must be 1 row for Length");
             return;
@@ -129,6 +127,7 @@ public class VectorCalculationUI extends AppCompatActivity {
     }
 
     public void unitVector(View view) {
+        setup(1);
         if (inputs.size() != 1) {
             alertHelper("Must be 1 row for Unit Vector");
             return;
@@ -142,6 +141,7 @@ public class VectorCalculationUI extends AppCompatActivity {
     }
 
     public void addition(View view) {
+        setup(2);
         if (inputs.size() == 0) {
             alertHelper("Must be more than 1 row");
             return;
@@ -162,6 +162,7 @@ public class VectorCalculationUI extends AppCompatActivity {
     }
 
     public void crossProduct(View view) {
+        setup(2);
         if (!(inputs.size() > 1)) {
             alertHelper("Must be more than 1 row");
             return;
@@ -201,6 +202,10 @@ public class VectorCalculationUI extends AppCompatActivity {
             vectors.add(vectorController.createVector(components));
         }
         return vectors;
+    }
+
+    public void showResult(View v) {
+        
     }
 
     private void alertHelper(String msg) {
@@ -262,6 +267,12 @@ public class VectorCalculationUI extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void flushInput() {
+        while (inputs.size() != 0) {
+            removeRow(null);
+        }
     }
 
     private void setup(int numRow) {
