@@ -22,6 +22,7 @@ public class VectorCalculationUI extends AppCompatActivity {
     private List<List<EditText>> inputs;
     private static final String DEFAULT_DELTA_VALUE = "%.7f";
     private Vector result;
+    private String currCalculation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,7 @@ public class VectorCalculationUI extends AppCompatActivity {
         setContentView(R.layout.vector_calcuator_layout);
         inputs = new ArrayList<>();
         result = null;
+        currCalculation = null;
         numRow = 0;
         EditText inputNumber = (EditText) findViewById(R.id.componentEditText);
         inputNumber.addTextChangedListener(new TextWatcher() {
@@ -45,6 +47,8 @@ public class VectorCalculationUI extends AppCompatActivity {
         });
     }
 
+    // THIS METHOD WAS DELETED DUE TO THE INTERNAL CODE CHANGE
+    /*
     public void addRow(View view) {
         final EditText editText = (EditText) findViewById(R.id.componentEditText);
         if (editText.getText().toString().equals("")) {
@@ -77,6 +81,8 @@ public class VectorCalculationUI extends AppCompatActivity {
             }
         });
     }
+    */
+
 
 
 
@@ -186,6 +192,26 @@ public class VectorCalculationUI extends AppCompatActivity {
         setup(2);
     }
 
+
+    // TODO
+    public void submit(View v) {
+        switch (currCalculation) {
+            case "dotProduct": {
+                break;
+            }
+            case "norm": {
+                break;
+            }
+            case "addition": {
+                break;
+            }
+            case "unitVector": {
+                break;
+            }
+        }
+    }
+
+
     private List<Vector> vectorConverter() {
         List<Vector> vectors = new ArrayList<>();
         for (List<EditText> ets: inputs) {
@@ -204,9 +230,7 @@ public class VectorCalculationUI extends AppCompatActivity {
         return vectors;
     }
 
-    public void showResult(View v) {
 
-    }
 
     private void alertHelper(String msg) {
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
