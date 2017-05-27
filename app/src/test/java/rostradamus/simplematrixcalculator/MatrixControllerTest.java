@@ -66,13 +66,13 @@ public class MatrixControllerTest {
         double expected = testMatrixController.determinant(testMatrix1);
         assertEquals(expected,  68.14699999999999, DEFAULT_DELTA);
 
-        Vector tv1 = testVectorController.createVector(Arrays.asList(3.0, 1.5, 4.3, 1.6, 4.9));
-        Vector tv2 = testVectorController.createVector(Arrays.asList(5.4, 1.0, 2.7, 11.4, 999.0));
-        Vector tv3 = testVectorController.createVector(Arrays.asList(4.9, 5.6, 3.0, 1.7, 4.55));
-        Vector tv4 = testVectorController.createVector(Arrays.asList(1.0, 2.0, 3.0, 33.4, 54.1));
-        Vector tv5 = testVectorController.createVector(Arrays.asList(2.0, 3.0, 4.0, -4.31, -405.3));
+        Vector v1 = testVectorController.createVector(Arrays.asList(3.0, 1.5, 4.3, 1.6, 4.9));
+        Vector v2 = testVectorController.createVector(Arrays.asList(5.4, 1.0, 2.7, 11.4, 999.0));
+        Vector v3 = testVectorController.createVector(Arrays.asList(4.9, 5.6, 3.0, 1.7, 4.55));
+        Vector v4 = testVectorController.createVector(Arrays.asList(1.0, 2.0, 3.0, 33.4, 54.1));
+        Vector v5 = testVectorController.createVector(Arrays.asList(2.0, 3.0, 4.0, -4.31, -405.3));
 
-        Matrix testMatrix = testMatrixController.createMatrix(Arrays.asList(tv1, tv2, tv3, tv4, tv5));
+        Matrix testMatrix = testMatrixController.createMatrix(Arrays.asList(v1, v2, v3, v4, v5));
 
         expected = testMatrixController.determinant(testMatrix);
         assertEquals(expected, 275989.8161120002, DEFAULT_DELTA);
@@ -80,26 +80,26 @@ public class MatrixControllerTest {
 
     @Test (expected = UnavailableMatrixException.class)
     public void testDeterminantWithNonSquareMatrix() throws UnavailableMatrixException {
-        Vector tv1 = testVectorController.createVector(Arrays.asList(3.0, 1.5, 4.3));
-        Vector tv2 = testVectorController.createVector(Arrays.asList(5.4, 1.0, 2.7));
-        Matrix testMatrix = testMatrixController.createMatrix(Arrays.asList(tv1, tv2));
+        Vector v1 = testVectorController.createVector(Arrays.asList(3.0, 1.5, 4.3));
+        Vector v2 = testVectorController.createVector(Arrays.asList(5.4, 1.0, 2.7));
+        Matrix testMatrix = testMatrixController.createMatrix(Arrays.asList(v1, v2));
         double result = testMatrixController.determinant(testMatrix);
         fail(EXCEPTION_UNCAUGHT_MSG);
     }
 
     private void setUp() throws UnavailableMatrixException{
-        Vector tv1 = testVectorController.createVector(Arrays.asList(3.0, 1.5, 4.3));
-        Vector tv2 = testVectorController.createVector(Arrays.asList(5.4, 1.0, 2.7));
-        Vector tv3 = testVectorController.createVector(Arrays.asList(4.9, 5.6, 3.0));
-        Vector tv4 = testVectorController.createVector(Arrays.asList(1.0, 2.0, 3.0));
-        Vector tv5 = testVectorController.createVector(Arrays.asList(2.0, 3.0, 4.0));
-        Vector tv6 = testVectorController.createVector(Arrays.asList(3.0, 4.0, 5.0));
-        Vector tv7 = testVectorController.createVector(Arrays.asList(1.0, 2.0));
-        Vector tv8 = testVectorController.createVector(Arrays.asList(4.0, 3.0));
-        testMatrix1 = testMatrixController.createMatrix(Arrays.asList(tv1, tv2, tv3));
-        testMatrix2 = testMatrixController.createMatrix(Arrays.asList(tv4, tv5, tv6));
-        testMatrix3 = testMatrixController.createMatrix(Arrays.asList(tv7, tv8));
+        Vector v1 = testVectorController.createVector(Arrays.asList(3.0, 1.5, 4.3));
+        Vector v2 = testVectorController.createVector(Arrays.asList(5.4, 1.0, 2.7));
+        Vector v3 = testVectorController.createVector(Arrays.asList(4.9, 5.6, 3.0));
+        Vector v4 = testVectorController.createVector(Arrays.asList(1.0, 2.0, 3.0));
+        Vector v5 = testVectorController.createVector(Arrays.asList(2.0, 3.0, 4.0));
+        Vector v6 = testVectorController.createVector(Arrays.asList(3.0, 4.0, 5.0));
+        Vector v7 = testVectorController.createVector(Arrays.asList(1.0, 2.0));
+        Vector v8 = testVectorController.createVector(Arrays.asList(4.0, 3.0));
+        testMatrix1 = testMatrixController.createMatrix(Arrays.asList(v1, v2, v3));
+        testMatrix2 = testMatrixController.createMatrix(Arrays.asList(v4, v5, v6));
+        testMatrix3 = testMatrixController.createMatrix(Arrays.asList(v7, v8));
 
-        // Vector tv7 = testVectorController.createVector(Arrays.asList(1.0, 2.0, 3.0, 4.0));
+        // Vector v7 = testVectorController.createVector(Arrays.asList(1.0, 2.0, 3.0, 4.0));
     }
 }

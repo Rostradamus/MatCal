@@ -59,13 +59,13 @@ public class VectorCalculationUI extends AppCompatActivity {
 
                 case "dotProduct": {
                     List<Vector> vectors = vectorConverter();
-                    double result = vectorController.dotProduct(vectors.get(0), vectors.get(1));
-                    renderResult(doubleToVector(result));
+                    result = doubleToVector(vectorController.dotProduct(vectors.get(0), vectors.get(1)));
+                    renderResult(result);
                     break;
                 }
                 case "norm": {
-                    double result = vectorController.norm(vectorConverter().get(0));
-                    renderResult(doubleToVector(result));
+                    result = doubleToVector(vectorController.norm(vectorConverter().get(0)));
+                    renderResult(result);
                     break;
                 }
                 case "addition": {
@@ -75,7 +75,7 @@ public class VectorCalculationUI extends AppCompatActivity {
                     break;
                 }
                 case "unitVector": {
-                    Vector result = vectorController.unitVector(vectorConverter().get(0));
+                    result = vectorController.unitVector(vectorConverter().get(0));
                     renderResult(result);
                     break;
                 }
@@ -91,14 +91,14 @@ public class VectorCalculationUI extends AppCompatActivity {
                 }
                 case "angle": {
                     List<Vector> vectors = vectorConverter();
-                    double result = vectorController.angle(vectors.get(0), vectors.get(1));
-                    renderResult(doubleToVector(result));
+                    result = doubleToVector(vectorController.angle(vectors.get(0), vectors.get(1)));
+                    renderResult(result);
                     break;
                 }
                 case "scalarProjection": {
                     List<Vector> vectors = vectorConverter();
-                    double result = vectorController.scalarProjection(vectors.get(0), vectors.get(1));
-                    renderResult(doubleToVector(result));
+                    result = doubleToVector(vectorController.scalarProjection(vectors.get(0), vectors.get(1)));
+                    renderResult(result);
                     break;
                 }
                 case "vectorProjection": {
