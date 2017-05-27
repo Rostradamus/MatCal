@@ -47,106 +47,25 @@ public class VectorCalculationUI extends AppCompatActivity {
         });
     }
 
-    // THIS METHOD WAS DELETED DUE TO THE INTERNAL CODE CHANGE
-    /*
-    public void addRow(View view) {
-        final EditText editText = (EditText) findViewById(R.id.componentEditText);
-        if (editText.getText().toString().equals("")) {
-            alertHelper("Must enter number");
-            return;
-        }
-        final TableLayout table = (TableLayout) findViewById(R.id.vectorTable);
-        table.post(new Runnable() {
-            @Override
-            public void run() {
-
-                numRow++;
-                numComponent = Integer.parseInt(editText.getText().toString());
-                TableRow row = new TableRow(getApplicationContext());
-                row.setId(numRow);
-                TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
-                row.setLayoutParams(params);
-                int width = table.getWidth() / numComponent;
-                List<EditText> ets = new ArrayList<>();
-                for (int i = 0; i < numComponent; i++) {
-                    EditText input = new EditText(getApplicationContext());
-                    input.setWidth(width);
-                    input.setGravity(Gravity.CENTER_HORIZONTAL);
-                    input.setId(numRow * 100 + i);
-                    row.addView(input);
-                    ets.add(input);
-                }
-                table.addView(row);
-                inputs.add(ets);
-            }
-        });
-    }
-    */
-
-    public void dotProduct(View view) {
-        currCalculation = "dotProduct";
+    public void selectCalculation(View view) {
+        currCalculation = getResources().getResourceName(view.getId()).split("/")[1];
         setup();
     }
 
-    public void norm (View view) {
-        currCalculation = "norm";
-        setup();
-    }
-
-    public void unitVector(View view) {
-        currCalculation = "unitVector";
-        setup();
-    }
-
-    public void addition(View view) {
-        currCalculation = "addition";
-        setup();
-    }
-
-    public void crossProduct(View view) {
-        currCalculation = "crossProduct";
-        setup();
-    }
-
-    // TODO
-    public void angle(View view) {
-        currCalculation = "angle";
-        setup();
-    }
-
-    // TODO
-    public void scalarMultiplication(View view) {
-        currCalculation = "scalarMultiplication";
-        setup();
-    }
-
-    // TODO
-    public void scalarProjection(View view) {
-        currCalculation = "scalarProjection";
-        setup();
-    }
-
-    // TODO
-    public void vectorProjection(View view) {
-        currCalculation = "vectorProjection";
-        setup();
-    }
-
-
-    // TODO : RENDER EACH RESULT
     public void submit(View v) {
+
         try {
             switch (currCalculation) {
 
                 case "dotProduct": {
                     List<Vector> vectors = vectorConverter();
                     double result = vectorController.dotProduct(vectors.get(0), vectors.get(1));
-                    renderResult(result);
+                    renderResult(doubleToVector(result));
                     break;
                 }
                 case "norm": {
                     double result = vectorController.norm(vectorConverter().get(0));
-                    renderResult(result);
+                    renderResult(doubleToVector(result));
                     break;
                 }
                 case "addition": {
@@ -173,13 +92,13 @@ public class VectorCalculationUI extends AppCompatActivity {
                 case "angle": {
                     List<Vector> vectors = vectorConverter();
                     double result = vectorController.angle(vectors.get(0), vectors.get(1));
-                    renderResult(result);
+                    renderResult(doubleToVector(result));
                     break;
                 }
                 case "scalarProjection": {
                     List<Vector> vectors = vectorConverter();
                     double result = vectorController.scalarProjection(vectors.get(0), vectors.get(1));
-                    renderResult(result);
+                    renderResult(doubleToVector(result));
                     break;
                 }
                 case "vectorProjection": {
@@ -194,12 +113,16 @@ public class VectorCalculationUI extends AppCompatActivity {
             }
         } catch (UnavailableVectorException e) {
             alertHelper(e.getMessage());
+        } catch (Exception e) {
+            alertHelper("Unexpected Exception: " + e.getMessage());
         }
     }
 
 
     private List<Vector> vectorConverter() {
         List<Vector> vectors = new ArrayList<>();
+
+        outerloop:
         for (List<EditText> ets: inputs) {
             List<Double> components = new ArrayList<>();
             for (EditText et: ets){
@@ -208,6 +131,7 @@ public class VectorCalculationUI extends AppCompatActivity {
                     components.add(Double.parseDouble(input));
                 } catch (RuntimeException e) {
                     alertHelper(e.getMessage());
+                    break outerloop;
                 }
 
             }
@@ -216,7 +140,9 @@ public class VectorCalculationUI extends AppCompatActivity {
         return vectors;
     }
 
-
+    private Vector doubleToVector(double value) {
+        return vectorController.createVector(Collections.singletonList(value));
+    }
 
     private void alertHelper(String msg) {
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
@@ -229,23 +155,6 @@ public class VectorCalculationUI extends AppCompatActivity {
                     }
                 });
         alertDialog.show();
-    }
-
-    private void renderResult(final double result) {
-        final TableLayout resultTable = (TableLayout) findViewById(R.id.outputTable);
-        resultTable.post(new Runnable() {
-            @Override
-            public void run() {
-                int width = resultTable.getWidth();
-                resultTable.removeAllViews();
-                TextView resultView = new TextView(getApplicationContext());
-                resultView.setWidth(width);
-                resultView.setText("Result = \n" + Double.toString(cutDouble(result)));
-                resultView.setGravity(Gravity.CENTER_HORIZONTAL);
-                resultView.setTextSize(35);
-                resultTable.addView(resultView);
-            }
-        });
     }
 
     private void renderResult(final Vector result) {
@@ -279,38 +188,35 @@ public class VectorCalculationUI extends AppCompatActivity {
         });
     }
 
-    private void removeRow(View view) {
-        /* Removed due to default setup
-        if (numRow == 0) {
-            alertHelper("No more row to remove");
-            return;
-        }
-        */
-        TableRow tableRow = (TableRow) findViewById(numRow);
-        for (int i = 0; i < numComponent; i++) {
-            tableRow.removeView(findViewById(numRow + i));
-        }
-        TableLayout vectorTable = (TableLayout) findViewById(R.id.vectorTable);
-        vectorTable.removeView(tableRow);
-        inputs.remove(numRow - 1);
-        numRow--;
-    }
-
     private void flushInput() {
         while (inputs.size() != 0) {
-            removeRow(null);
+            TableRow tableRow = (TableRow) findViewById(numRow);
+            for (int i = 0; i < numComponent; i++) {
+                tableRow.removeView(findViewById(numRow + i));
+            }
+            TableLayout vectorTable = (TableLayout) findViewById(R.id.vectorTable);
+            vectorTable.removeView(tableRow);
+            inputs.remove(numRow - 1);
+            numRow--;
         }
     }
 
     private void setup() {
-        flushInput();
+
         switch (currCalculation) {
             case "norm":
             case "unitVector":
-                setRows(1);
+                if (numRow != 1) {
+                    flushInput();
+                    setRows(1);
+                }
+
                 break;
             default:
-                setRows(2);
+                if (numRow != 2) {
+                    flushInput();
+                    setRows(2);
+                }
                 break;
         }
         Button submit = (Button) findViewById(R.id.submit);
@@ -351,16 +257,90 @@ public class VectorCalculationUI extends AppCompatActivity {
         });
     }
 
-    private List<Double> cutDouble(List<Double> doubles) {
-        List<Double> newComps = new ArrayList<>();
-        for (Double comp: doubles) newComps.add(cutDouble(comp));
-        return newComps;
-    }
-
     private double cutDouble(double value) {
         return Double.parseDouble(String.format(DEFAULT_DELTA_VALUE, value));
     }
 
 
+
+    // THIS METHOD WAS DELETED DUE TO THE INTERNAL CODE CHANGE
+    /*
+    public void addRow(View view) {
+        final EditText editText = (EditText) findViewById(R.id.componentEditText);
+        if (editText.getText().toString().equals("")) {
+            alertHelper("Must enter number");
+            return;
+        }
+        final TableLayout table = (TableLayout) findViewById(R.id.vectorTable);
+        table.post(new Runnable() {
+            @Override
+            public void run() {
+
+                numRow++;
+                numComponent = Integer.parseInt(editText.getText().toString());
+                TableRow row = new TableRow(getApplicationContext());
+                row.setId(numRow);
+                TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+                row.setLayoutParams(params);
+                int width = table.getWidth() / numComponent;
+                List<EditText> ets = new ArrayList<>();
+                for (int i = 0; i < numComponent; i++) {
+                    EditText input = new EditText(getApplicationContext());
+                    input.setWidth(width);
+                    input.setGravity(Gravity.CENTER_HORIZONTAL);
+                    input.setId(numRow * 100 + i);
+                    row.addView(input);
+                    ets.add(input);
+                }
+                table.addView(row);
+                inputs.add(ets);
+            }
+        });
+    }
+    */
+
+
+        /* REMOVED
+    private void removeRow(View view) {
+        if (numRow == 0) {
+            alertHelper("No more row to remove");
+            return;
+        }
+        TableRow tableRow = (TableRow) findViewById(numRow);
+        for (int i = 0; i < numComponent; i++) {
+            tableRow.removeView(findViewById(numRow + i));
+        }
+        TableLayout vectorTable = (TableLayout) findViewById(R.id.vectorTable);
+        vectorTable.removeView(tableRow);
+        inputs.remove(numRow - 1);
+        numRow--;
+    }
+    */
+        /* NOTE: NEEDLESS IN THIS VERSION
+    private List<Double> cutDouble(List<Double> doubles) {
+        List<Double> newComps = new ArrayList<>();
+        for (Double comp: doubles) newComps.add(cutDouble(comp));
+        return newComps;
+    }
+    */
+
+    /* REMOVED
+    private void renderResult(final double result) {
+        final TableLayout resultTable = (TableLayout) findViewById(R.id.outputTable);
+        resultTable.post(new Runnable() {
+            @Override
+            public void run() {
+                int width = resultTable.getWidth();
+                resultTable.removeAllViews();
+                TextView resultView = new TextView(getApplicationContext());
+                resultView.setWidth(width);
+                resultView.setText("Result = \n" + Double.toString(cutDouble(result)));
+                resultView.setGravity(Gravity.CENTER_HORIZONTAL);
+                resultView.setTextSize(35);
+                resultTable.addView(resultView);
+            }
+        });
+    }
+    */
 
 }

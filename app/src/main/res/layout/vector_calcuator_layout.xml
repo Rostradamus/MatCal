@@ -71,77 +71,78 @@
                 android:layout_marginTop="8dp"
                 android:onClick="submit"
                 android:text="@string/resultButton"
+                android:textSize="24sp"
                 android:visibility="gone"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/vectorTable" />
 
             <Button
-                android:id="@+id/dot_product"
+                android:id="@+id/dotProduct"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="dotProduct"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:onClick="selectCalculation"
                 android:text="@string/dot_product"
                 android:textAllCaps="false"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/unitVector"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp" />
+                app:layout_constraintTop_toBottomOf="@+id/unitVector" />
 
             <Button
                 android:id="@+id/norm"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
-                android:onClick="norm"
+                android:onClick="selectCalculation"
                 android:text="@string/length"
                 android:textAllCaps="false"
                 app:layout_constraintBaseline_toBaselineOf="@+id/unitVector"
-                app:layout_constraintRight_toLeftOf="@+id/unitVector"
-                android:layout_marginRight="8dp" />
+                app:layout_constraintRight_toLeftOf="@+id/unitVector" />
 
             <Button
                 android:id="@+id/unitVector"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="unitVector"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="16dp"
+                android:onClick="selectCalculation"
                 android:text="@string/unitVector"
                 android:textAllCaps="false"
-                android:layout_marginTop="16dp"
-                app:layout_constraintTop_toBottomOf="@+id/outputTable"
-                android:layout_marginLeft="8dp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginRight="8dp"
-                app:layout_constraintRight_toRightOf="parent" />
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/outputTable" />
 
             <Button
                 android:id="@+id/addition"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
-                android:onClick="addition"
+                android:onClick="selectCalculation"
                 android:text="@string/vectorAddition"
                 android:textAllCaps="false"
-                app:layout_constraintRight_toLeftOf="@+id/dot_product"
-                android:layout_marginRight="8dp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/dot_product" />
+                app:layout_constraintBaseline_toBaselineOf="@+id/dotProduct"
+                app:layout_constraintRight_toLeftOf="@+id/dotProduct" />
 
             <Button
                 android:id="@+id/crossProduct"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:onClick="crossProduct"
+                android:onClick="selectCalculation"
                 android:text="@string/crossProduct"
                 android:textAllCaps="false"
-                app:layout_constraintLeft_toRightOf="@+id/dot_product"
-                android:layout_marginLeft="8dp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/dot_product" />
+                app:layout_constraintBaseline_toBaselineOf="@+id/dotProduct"
+                app:layout_constraintLeft_toRightOf="@+id/dotProduct" />
 
             <TableLayout
                 android:id="@+id/outputTable"
@@ -156,50 +157,54 @@
             </TableLayout>
 
             <Button
-                android:id="@+id/scalar_mult"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/scalarMultiplication"
-                android:textAllCaps="false"
-                app:layout_constraintBaseline_toBaselineOf="@+id/unitVector"
-                app:layout_constraintLeft_toRightOf="@+id/unitVector"
-                android:layout_marginLeft="8dp" />
-
-            <Button
-                android:id="@+id/angle_vector"
+                android:id="@+id/scalarMultiplication"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:text="@string/angle"
+                android:onClick="selectCalculation"
+                android:text="@string/scalarMultiplication"
                 android:textAllCaps="false"
-                app:layout_constraintBaseline_toBaselineOf="@+id/vector_proj"
-                app:layout_constraintLeft_toRightOf="@+id/vector_proj" />
+                app:layout_constraintBaseline_toBaselineOf="@+id/unitVector"
+                app:layout_constraintLeft_toRightOf="@+id/unitVector" />
 
             <Button
-                android:id="@+id/vector_proj"
+                android:id="@+id/angle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:onClick="selectCalculation"
+                android:text="@string/angle"
+                android:textAllCaps="false"
+                app:layout_constraintBaseline_toBaselineOf="@+id/vectorProjection"
+                app:layout_constraintLeft_toRightOf="@+id/vectorProjection" />
+
+            <Button
+                android:id="@+id/vectorProjection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
+                android:onClick="selectCalculation"
                 android:text="@string/vectorProjection"
                 android:textAllCaps="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dot_product"
-                app:layout_constraintVertical_bias="0.0"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp" />
+                app:layout_constraintTop_toBottomOf="@+id/dotProduct"
+                app:layout_constraintVertical_bias="0.0" />
 
             <Button
-                android:id="@+id/scalar_proj"
+                android:id="@+id/scalarProjection"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
+                android:onClick="selectCalculation"
                 android:text="@string/scalarProjection"
                 android:textAllCaps="false"
-                app:layout_constraintBaseline_toBaselineOf="@+id/vector_proj"
-                app:layout_constraintRight_toLeftOf="@+id/vector_proj" />
+                app:layout_constraintBaseline_toBaselineOf="@+id/vectorProjection"
+                app:layout_constraintRight_toLeftOf="@+id/vectorProjection" />
 
             <android.support.constraint.Guideline
                 android:layout_width="wrap_content"
