@@ -83,26 +83,9 @@ public class VectorCalculationUI extends AppCompatActivity {
     }
     */
 
-
-
-
-    public void removeRow(View view) {
-        if (numRow == 0) {
-            alertHelper("No more row to remove");
-            return;
-        }
-        TableRow tableRow = (TableRow) findViewById(numRow);
-        for (int i = 0; i < numComponent; i++) {
-            tableRow.removeView(findViewById(numRow + i));
-        }
-        TableLayout vectorTable = (TableLayout) findViewById(R.id.vectorTable);
-        vectorTable.removeView(tableRow);
-        inputs.remove(numRow - 1);
-        numRow--;
-    }
-
     public void dotProduct(View view) {
         setup(2);
+        currCalculation = "dotProduct";
         if (inputs.size() != 2) {
             alertHelper("Must be 2 rows for Dot Product");
             return;
@@ -118,6 +101,7 @@ public class VectorCalculationUI extends AppCompatActivity {
 
     public void norm (View view) {
         setup(1);
+        currCalculation = "norm";
         if (inputs.size() != 1) {
             alertHelper("Must be 1 row for Length");
             return;
@@ -133,6 +117,7 @@ public class VectorCalculationUI extends AppCompatActivity {
 
     public void unitVector(View view) {
         setup(1);
+        currCalculation = "unitVector";
         if (inputs.size() != 1) {
             alertHelper("Must be 1 row for Unit Vector");
             return;
@@ -147,6 +132,7 @@ public class VectorCalculationUI extends AppCompatActivity {
 
     public void addition(View view) {
         setup(2);
+        currCalculation = "addition";
         if (inputs.size() == 0) {
             alertHelper("Must be more than 1 row");
             return;
@@ -168,6 +154,7 @@ public class VectorCalculationUI extends AppCompatActivity {
 
     public void crossProduct(View view) {
         setup(2);
+        currCalculation = "crossProduct";
         if (!(inputs.size() > 1)) {
             alertHelper("Must be more than 1 row");
             return;
@@ -187,14 +174,33 @@ public class VectorCalculationUI extends AppCompatActivity {
         }
     }
 
+    // TODO
     public void angle(View view) {
         setup(2);
+        currCalculation = "angle";
+    }
+
+    // TODO
+    public void scalarMultiplication(View view) {
+        setup(2);
+        currCalculation = "scalarMultiplication";
+    }
+
+    // TODO
+    public void scalarProjection(View view) {
+        setup(2);
+        currCalculation = "scalarProjection";
+    }
+
+    // TODO
+    public void vectorProjection(View view) {
+        setup(2);
+        currCalculation = "vectorProjection";
     }
 
 
     // TODO : RENDER EACH RESULT
     public void submit(View v) {
-
         try {
             switch (currCalculation) {
 
@@ -211,7 +217,7 @@ public class VectorCalculationUI extends AppCompatActivity {
                 }
                 case "addition": {
                     List<Vector> vectors = vectorConverter();
-                    Vector result = vectorController.add(vectors.get(0), vectors.get(1));
+                    result = vectorController.add(vectors.get(0), vectors.get(1));
                     renderResult(result);
                     break;
                 }
@@ -221,18 +227,31 @@ public class VectorCalculationUI extends AppCompatActivity {
                     break;
                 }
                 case "crossProduct": {
+                    List<Vector> vectors = vectorConverter();
+                    result = vectorController.crossProduct(vectors.get(0), vectors.get(1));
+                    renderResult(result);
                     break;
                 }
                 case "scalarMultiplication": {
+                    //TODO
                     break;
                 }
                 case "angle": {
+                    List<Vector> vectors = vectorConverter();
+                    double result = vectorController.angle(vectors.get(0), vectors.get(1));
+                    renderResult(result);
                     break;
                 }
-                case "scalarProj": {
+                case "scalarProjection": {
+                    List<Vector> vectors = vectorConverter();
+                    double result = vectorController.scalarProjection(vectors.get(0), vectors.get(1));
+                    renderResult(result);
                     break;
                 }
-                case "vectorProj": {
+                case "vectorProjection": {
+                    List<Vector> vectors = vectorConverter();
+                    result = vectorController.projection(vectors.get(0), vectors.get(1));
+                    renderResult(result);
                     break;
                 }
                 default: {
@@ -324,6 +343,21 @@ public class VectorCalculationUI extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void removeRow(View view) {
+        if (numRow == 0) {
+            alertHelper("No more row to remove");
+            return;
+        }
+        TableRow tableRow = (TableRow) findViewById(numRow);
+        for (int i = 0; i < numComponent; i++) {
+            tableRow.removeView(findViewById(numRow + i));
+        }
+        TableLayout vectorTable = (TableLayout) findViewById(R.id.vectorTable);
+        vectorTable.removeView(tableRow);
+        inputs.remove(numRow - 1);
+        numRow--;
     }
 
     private void flushInput() {
