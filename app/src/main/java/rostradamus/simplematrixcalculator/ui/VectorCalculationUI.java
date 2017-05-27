@@ -84,118 +84,52 @@ public class VectorCalculationUI extends AppCompatActivity {
     */
 
     public void dotProduct(View view) {
-        setup(2);
         currCalculation = "dotProduct";
-        if (inputs.size() != 2) {
-            alertHelper("Must be 2 rows for Dot Product");
-            return;
-        }
-        List<Vector> vectors = vectorConverter();
-        try {
-            double result = vectorController.dotProduct(vectors.get(0), vectors.get(1));
-            renderResult(result);
-        } catch (UnavailableVectorException e) {
-            alertHelper("Vector is NOT valid");
-        }
+        setup();
     }
 
     public void norm (View view) {
-        setup(1);
         currCalculation = "norm";
-        if (inputs.size() != 1) {
-            alertHelper("Must be 1 row for Length");
-            return;
-        }
-        try {
-            double result = vectorController.norm(vectorConverter().get(0));
-
-            renderResult(result);
-        } catch (UnavailableVectorException e) {
-            alertHelper("Vector is NOT valid");
-        }
+        setup();
     }
 
     public void unitVector(View view) {
-        setup(1);
         currCalculation = "unitVector";
-        if (inputs.size() != 1) {
-            alertHelper("Must be 1 row for Unit Vector");
-            return;
-        }
-        try {
-            Vector result = vectorController.unitVector(vectorConverter().get(0));
-            renderResult(result);
-        } catch (UnavailableVectorException e) {
-            alertHelper("Vector is NOT valid");
-        }
+        setup();
     }
 
     public void addition(View view) {
-        setup(2);
         currCalculation = "addition";
-        if (inputs.size() == 0) {
-            alertHelper("Must be more than 1 row");
-            return;
-        }
-        List<Vector> vectors = vectorConverter();
-        try {
-            Vector result = null;
-            for (Vector vector: vectors) {
-                if (result == null)
-                    result = vector;
-                else
-                    result = vectorController.add(result, vector);
-            }
-            renderResult(result);
-        } catch (UnavailableVectorException e) {
-            alertHelper(e.getMessage());
-        }
+        setup();
     }
 
     public void crossProduct(View view) {
-        setup(2);
         currCalculation = "crossProduct";
-        if (!(inputs.size() > 1)) {
-            alertHelper("Must be more than 1 row");
-            return;
-        }
-        List<Vector> vectors = vectorConverter();
-        try {
-            Vector result = null;
-            for (Vector vector: vectors) {
-                if (result == null)
-                    result = vector;
-                else
-                    vectorController.crossProduct(result, vector);
-            }
-            renderResult(result);
-        } catch (UnavailableVectorException e) {
-            alertHelper(e.getMessage());
-        }
+        setup();
     }
 
     // TODO
     public void angle(View view) {
-        setup(2);
         currCalculation = "angle";
+        setup();
     }
 
     // TODO
     public void scalarMultiplication(View view) {
-        setup(2);
         currCalculation = "scalarMultiplication";
+        setup();
     }
 
     // TODO
     public void scalarProjection(View view) {
-        setup(2);
         currCalculation = "scalarProjection";
+        setup();
     }
 
     // TODO
     public void vectorProjection(View view) {
-        setup(2);
         currCalculation = "vectorProjection";
+        setup();
     }
 
 
@@ -346,10 +280,12 @@ public class VectorCalculationUI extends AppCompatActivity {
     }
 
     private void removeRow(View view) {
+        /* Removed due to default setup
         if (numRow == 0) {
             alertHelper("No more row to remove");
             return;
         }
+        */
         TableRow tableRow = (TableRow) findViewById(numRow);
         for (int i = 0; i < numComponent; i++) {
             tableRow.removeView(findViewById(numRow + i));
@@ -366,9 +302,19 @@ public class VectorCalculationUI extends AppCompatActivity {
         }
     }
 
-    private void setup(int numRow) {
+    private void setup() {
         flushInput();
-        setRows(numRow);
+        switch (currCalculation) {
+            case "norm":
+            case "unitVector":
+                setRows(1);
+                break;
+            default:
+                setRows(2);
+                break;
+        }
+        Button submit = (Button) findViewById(R.id.submit);
+        submit.setVisibility(View.VISIBLE);
     }
 
     private void setRows(final int number) {
