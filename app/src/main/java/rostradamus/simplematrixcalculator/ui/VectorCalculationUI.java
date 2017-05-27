@@ -129,7 +129,6 @@ public class VectorCalculationUI extends AppCompatActivity {
         } catch (UnavailableVectorException e) {
             alertHelper("Vector is NOT valid");
         }
-
     }
 
     public void unitVector(View view) {
@@ -193,21 +192,55 @@ public class VectorCalculationUI extends AppCompatActivity {
     }
 
 
-    // TODO
+    // TODO : RENDER EACH RESULT
     public void submit(View v) {
-        switch (currCalculation) {
-            case "dotProduct": {
-                break;
+
+        try {
+            switch (currCalculation) {
+
+                case "dotProduct": {
+                    List<Vector> vectors = vectorConverter();
+                    double result = vectorController.dotProduct(vectors.get(0), vectors.get(1));
+                    renderResult(result);
+                    break;
+                }
+                case "norm": {
+                    double result = vectorController.norm(vectorConverter().get(0));
+                    renderResult(result);
+                    break;
+                }
+                case "addition": {
+                    List<Vector> vectors = vectorConverter();
+                    Vector result = vectorController.add(vectors.get(0), vectors.get(1));
+                    renderResult(result);
+                    break;
+                }
+                case "unitVector": {
+                    Vector result = vectorController.unitVector(vectorConverter().get(0));
+                    renderResult(result);
+                    break;
+                }
+                case "crossProduct": {
+                    break;
+                }
+                case "scalarMultiplication": {
+                    break;
+                }
+                case "angle": {
+                    break;
+                }
+                case "scalarProj": {
+                    break;
+                }
+                case "vectorProj": {
+                    break;
+                }
+                default: {
+                    alertHelper("Warning: Unsupported Operation");
+                }
             }
-            case "norm": {
-                break;
-            }
-            case "addition": {
-                break;
-            }
-            case "unitVector": {
-                break;
-            }
+        } catch (UnavailableVectorException e) {
+            alertHelper(e.getMessage());
         }
     }
 
