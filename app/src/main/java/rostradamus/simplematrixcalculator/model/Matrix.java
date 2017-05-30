@@ -48,6 +48,11 @@ public class Matrix implements Iterable<Vector> {
         return numRows == numColumns;
     }
 
+    void setComponentAt(int row, int column, double value) {
+        // Matrix[row][column]
+        vectors.get(column).setComponentAt(row, value);
+    }
+
     // Check if the matrix is valid or not
     // EFFECT: return true if the matrix is valid
     //                        matrix has vectors with same number of components

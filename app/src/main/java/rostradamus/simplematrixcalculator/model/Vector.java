@@ -38,6 +38,10 @@ public class Vector implements Iterable<Double>{
             isNull = false;
     }
 
+    void setComponentAt(int index, double value) {
+        components.set(index, value);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

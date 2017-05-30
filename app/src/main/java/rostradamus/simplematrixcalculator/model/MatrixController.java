@@ -84,6 +84,7 @@ public class MatrixController implements IMatrixController {
 //        return null;
 //    }
 
+    // TODO
     @Override
     public Matrix gaussianElimination(Matrix matrix) throws UnavailableMatrixException {
         return null;
@@ -96,6 +97,7 @@ public class MatrixController implements IMatrixController {
         return determinantHelper(matrix);
     }
 
+    // TODO
     @Override
     public Matrix inverse(Matrix matrix) throws UnavailableMatrixException {
         return null;
@@ -103,14 +105,32 @@ public class MatrixController implements IMatrixController {
 
     @Override
     public Matrix multiply(Matrix m1, Matrix m2) throws UnavailableMatrixException {
-        return null;
+        if (m1.getNumColumns() != m2.getNumRows())
+            throw new UnavailableMatrixException("The number of columns of the 1st matrix must equal the number of rows of the 2nd matrix.");
+//        Matrix retMatrix = initMatrix(m1.getNumRows(), m2.getNumColumns());
+        int row = m1.getNumRows();
+        int col = m2.getNumColumns();
+        double[][] retMatrix = new double[row][col];
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                double result = 0;
+                for (int k = 0; k < m1.getNumColumns(); k++) {
+                    result += m1.getVectors().get(k).getComponents().get(i)
+                            * m2.getVectors().get(j).getComponents().get(k);
+                }
+                retMatrix[i][j] = result;
+            }
+        }
+        return matrixHelper(retMatrix);
     }
 
+    // TODO
     @Override
     public double eigenvalue(Matrix matrix) throws UnavailableMatrixException {
         return 0;
     }
 
+    // TODO
     @Override
     public Vector eigenvector(Matrix matrix) throws UnavailableMatrixException {
         return null;
@@ -174,4 +194,30 @@ public class MatrixController implements IMatrixController {
         return matrix.getVectors().get(index);
     }
 
+    private Matrix matrixHelper(double[][] matrix) throws UnavailableMatrixException{
+
+        int row = matrix.length;
+        int col = matrix[0].length;
+        List<Vector> vectors = new ArrayList<>();
+        for(int i = 0; i < col; i++) {
+            List<Double> v = new ArrayList<>();
+            for(int j = 0; j < row; j++) {
+                v.add(matrix[j][i]);
+            }
+            vectors.add(new Vector(v));
+        }
+
+        return new Matrix(vectors);
+    }
+    /*
+    private Matrix initMatrix(int row, int column) throws UnavailableMatrixException {
+        List<Double> d = new ArrayList<>();
+        for (int i = 0; i < row; i++)
+            d.add((double) 0);
+        List<Vector> vectors = new ArrayList<>();
+        for (int j = 0; j < column; j++)
+            vectors.add(new Vector(d));
+        return new Matrix(vectors);
+    }
+    */
 }

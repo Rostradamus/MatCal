@@ -183,7 +183,6 @@ public class VectorCalculationUI extends AppCompatActivity {
                     tr.addView(component);
                     resultTable.addView(tr);
                 }
-
             }
         });
     }

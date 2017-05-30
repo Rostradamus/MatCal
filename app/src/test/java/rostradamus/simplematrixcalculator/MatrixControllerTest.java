@@ -87,6 +87,25 @@ public class MatrixControllerTest {
         fail(EXCEPTION_UNCAUGHT_MSG);
     }
 
+    @Test
+    public void testMultiply() throws UnavailableMatrixException {
+        Matrix actual = testMatrixController.multiply(testMatrix1, testMatrix2);
+        double[][] test = {
+                {28.5, 41.8, 55.1},
+                {20.3, 28.4, 36.5},
+                {18.7, 28.7, 38.7}
+        };
+        Matrix expected = matrixHelper(test);
+        int row = testMatrixController.getNumRows(testMatrix1);
+        int column = testMatrixController.getNumColumns(testMatrix2);
+
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                assertEquals(testMatrixController.getComponentAt(expected, i, j), testMatrixController.getComponentAt(actual, i, j), DEFAULT_DELTA);
+            }
+        }
+    }
+
     private void setUp() throws UnavailableMatrixException{
         Vector v1 = testVectorController.createVector(Arrays.asList(3.0, 1.5, 4.3));
         Vector v2 = testVectorController.createVector(Arrays.asList(5.4, 1.0, 2.7));
@@ -101,5 +120,19 @@ public class MatrixControllerTest {
         testMatrix3 = testMatrixController.createMatrix(Arrays.asList(v7, v8));
 
         // Vector v7 = testVectorController.createVector(Arrays.asList(1.0, 2.0, 3.0, 4.0));
+    }
+
+    private Matrix matrixHelper(double[][] matrix) throws UnavailableMatrixException{
+        int row = matrix.length;
+        int col = matrix[0].length;
+        List<Vector> vectors = new ArrayList<>();
+        for(int i = 0; i < col; i++) {
+            List<Double> v = new ArrayList<>();
+            for(int j = 0; j < row; j++) {
+                v.add(matrix[j][i]);
+            }
+            vectors.add(testVectorController.createVector(v));
+        }
+        return testMatrixController.createMatrix(vectors);
     }
 }
