@@ -97,9 +97,16 @@ public class MatrixController implements IMatrixController {
         return determinantHelper(matrix);
     }
 
-    // TODO
+    // TODO: need to implement Gaussian to compute inverse matrix
     @Override
     public Matrix inverse(Matrix matrix) throws UnavailableMatrixException {
+        if (!matrix.isSquare())
+            throw new UnavailableMatrixException("Error: Input matrix must be square");
+        double determinant = determinant(matrix);
+        if (determinant == 0 )
+            throw new UnavailableMatrixException("Error: Input matrix is Singular(No Inverse Matrix)");
+
+
         return null;
     }
 
@@ -122,6 +129,17 @@ public class MatrixController implements IMatrixController {
             }
         }
         return matrixHelper(retMatrix);
+    }
+
+    @Override
+    public Matrix scalarMultiplication(double scalar, Matrix matrix) throws UnavailableMatrixException {
+        for (int i = 0; i < matrix.getNumColumns(); i++) {
+            for (int j = 0; j < matrix.getNumRows(); j++) {
+                double target = matrix.getVectors().get(i).getComponents().get(i);
+                matrix.setComponentAt(j, i, scalar * target);
+            }
+        }
+        return matrix;
     }
 
     // TODO

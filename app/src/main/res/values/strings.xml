@@ -21,6 +21,8 @@
     <string name="scalarProjection">comp (u, v)</string>
     <string name="vectorProjection">proj (u, v)</string>
     <string name="resultButton">=</string>
+    <string name="currCalculation">Current Calculation:</string>
+    <string name="ns">Not Selected</string>
 
 
 </resources>

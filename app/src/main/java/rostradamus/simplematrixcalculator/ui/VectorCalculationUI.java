@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.text.*;
 import android.widget.*;
 import android.view.*;
+
+import org.w3c.dom.Text;
+
 import rostradamus.simplematrixcalculator.R;
 import rostradamus.simplematrixcalculator.exception.UnavailableVectorException;
 import rostradamus.simplematrixcalculator.model.IVectorController;
@@ -49,38 +52,38 @@ public class VectorCalculationUI extends AppCompatActivity {
 
     public void selectCalculation(View view) {
         currCalculation = getResources().getResourceName(view.getId()).split("/")[1];
+        TextView tv = (TextView) findViewById(R.id.defaultCal);
+        tv.setText(((Button) findViewById(view.getId())).getText());
         setup();
     }
 
     public void submit(View v) {
 
         try {
+            List<Vector> vectors = vectorConverter();
             switch (currCalculation) {
 
                 case "dotProduct": {
-                    List<Vector> vectors = vectorConverter();
                     result = doubleToVector(vectorController.dotProduct(vectors.get(0), vectors.get(1)));
                     renderResult(result);
                     break;
                 }
                 case "norm": {
-                    result = doubleToVector(vectorController.norm(vectorConverter().get(0)));
+                    result = doubleToVector(vectorController.norm(vectors.get(0)));
                     renderResult(result);
                     break;
                 }
                 case "addition": {
-                    List<Vector> vectors = vectorConverter();
                     result = vectorController.add(vectors.get(0), vectors.get(1));
                     renderResult(result);
                     break;
                 }
                 case "unitVector": {
-                    result = vectorController.unitVector(vectorConverter().get(0));
+                    result = vectorController.unitVector(vectors.get(0));
                     renderResult(result);
                     break;
                 }
                 case "crossProduct": {
-                    List<Vector> vectors = vectorConverter();
                     result = vectorController.crossProduct(vectors.get(0), vectors.get(1));
                     renderResult(result);
                     break;
@@ -90,19 +93,16 @@ public class VectorCalculationUI extends AppCompatActivity {
                     break;
                 }
                 case "angle": {
-                    List<Vector> vectors = vectorConverter();
                     result = doubleToVector(vectorController.angle(vectors.get(0), vectors.get(1)));
                     renderResult(result);
                     break;
                 }
                 case "scalarProjection": {
-                    List<Vector> vectors = vectorConverter();
                     result = doubleToVector(vectorController.scalarProjection(vectors.get(0), vectors.get(1)));
                     renderResult(result);
                     break;
                 }
                 case "vectorProjection": {
-                    List<Vector> vectors = vectorConverter();
                     result = vectorController.projection(vectors.get(0), vectors.get(1));
                     renderResult(result);
                     break;
@@ -218,6 +218,7 @@ public class VectorCalculationUI extends AppCompatActivity {
                 }
                 break;
         }
+
         Button submit = (Button) findViewById(R.id.submit);
         submit.setVisibility(View.VISIBLE);
     }

@@ -20,6 +20,8 @@ public interface IMatrixController {
 
     double determinant(Matrix matrix) throws UnavailableMatrixException;
 
+    Matrix scalarMultiplication(double scalar, Matrix matrix) throws UnavailableMatrixException;
+
     Matrix inverse(Matrix matrix) throws UnavailableMatrixException;
 
     Matrix multiply(Matrix m1, Matrix m2) throws UnavailableMatrixException;
